@@ -1,0 +1,13 @@
+*** RETIROS ***
+Se insertan en la tabla "retiros" con los siguientes campos:
+retiro_id: autonumerico
+fecha: formato americano
+nombre
+institucion
+distrito_id: numero de distrito, de 0 a 22
+aprobado: 'S'
+aprobado_por: 34 (usuario de Natalia)
+aprobado_fecha: igual a fecha
+madera/papel/carton/... : El que corresponda, en gramos
+evento
+lugar_retiro: 'VIAJERO' o 'CENTRO'

@@ -1,0 +1,2 @@
+-- Agrego el "falso distrito" 22 para vincular los retiros que no declararon distrito.
+INSERT INTO  distrito(distrito_id, nombre) VALUES (22,'No Declarado');
