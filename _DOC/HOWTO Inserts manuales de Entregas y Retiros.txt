@@ -1,4 +1,4 @@
-*** RETIROS ***
+************************************ RETIROS ************************************************
 Se insertan en la tabla "retiros" con los siguientes campos:
 retiro_id: autonumerico
 fecha: formato americano
@@ -11,3 +11,8 @@ aprobado_fecha: igual a fecha
 madera/papel/carton/... : El que corresponda, en gramos
 evento
 lugar_retiro: 'VIAJERO' o 'CENTRO'
+
+Ejemplo:
+INSERT INTO retiros(fecha,nombre,institucion,distrito_id,proyecto_institucional,aprobado,aprobado_por,aprobado_fecha,madera,papel,carton,plastico,metal,textil,vidrio,`natural`,otros,updated_at,created_at,evento,lugar_retiro) VALUES ('2018-4-4','Paulic Graciela','ISPEI Eccleston','9','Espacio','S',34,'2018-4-4','2000','1500','0','2000','0','1000','0','0','0','2018-4-4','2018-4-4','','CENTRO');
+
+Luego, reducir el stock de la tabla material
