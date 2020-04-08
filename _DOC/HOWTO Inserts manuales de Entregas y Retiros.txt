@@ -16,3 +16,12 @@ Ejemplo:
 INSERT INTO retiros(fecha,nombre,institucion,distrito_id,proyecto_institucional,aprobado,aprobado_por,aprobado_fecha,madera,papel,carton,plastico,metal,textil,vidrio,`natural`,otros,updated_at,created_at,evento,lugar_retiro) VALUES ('2018-4-4','Paulic Graciela','ISPEI Eccleston','9','Espacio','S',34,'2018-4-4','2000','1500','0','2000','0','1000','0','0','0','2018-4-4','2018-4-4','','CENTRO');
 
 Luego, reducir el stock de la tabla material
+UPDATE material SET stock = (stock - 4675110) WHERE nombre = 'MADERA';
+UPDATE material SET stock = (stock - 421820) WHERE nombre = 'PAPEL';
+UPDATE material SET stock = (stock - 1757493) WHERE nombre = 'PLASTICO';
+UPDATE material SET stock = (stock - 250960) WHERE nombre = 'METAL';
+UPDATE material SET stock = (stock - 674906) WHERE nombre = 'TEXTIL';
+UPDATE material SET stock = (stock - 170010) WHERE nombre = 'VIDRIO';
+UPDATE material SET stock = (stock - 14620) WHERE nombre = 'NATURAL';
+
+SELECT SUM(madera) FROM retiros WHERE fecha >= '2018-01-01' AND fecha <= '2018-12-31';

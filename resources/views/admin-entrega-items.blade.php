@@ -16,7 +16,7 @@
     <div class="container">
         @include('admin-navbar')
         <div class="row">
-            <div class="col-md-6 titulo">Contenido de la Entrega #{{$entrega_id}} ({{$entrega->fecha}})</div>
+            <div class="col-md-6 titulo">Contenido de la Entrega #{{$entrega_id}} ({{ \Carbon\Carbon::parse($entrega->fecha)->format('d/m/Y')}})</div>
             <div class="col-md-6 text-right">
                 <button class="btn btn-primary" id="butNuevoItem" type="button">Nuevo contenido</button>
                 <button class="btn btn-default" id="butVolver" type="button" onClick="javascript:volver({{$entrega_id}})">Volver</button>
