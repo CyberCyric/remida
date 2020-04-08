@@ -19,9 +19,6 @@
             <li><a href="{{ url('/admin/reportes/stock') }}">Stock de Material</a></li>
             <li><a href="{{ url('/admin/reportes/stock_historico') }}">Stock historico</a></li>
             <li><a href="{{ url('/admin/reportes/entregas') }}">Entregas</a></li>
-            <!--
-            <li><a href="{{ url('/admin/reportes/entregas_empresas') }}">Entregas por Empresas</a></li>
-            -->
             <li><a href="{{ url('/admin/reportes/empresas_registradas') }}">Empresas Registradas</a></li>
             <li><a href="{{ url('/admin/reportes/distritos') }}">Distritos Educativos</a></li>
             <li><a href="{{ url('/admin/reportes/lugares_entrega') }}">Lugares de Retiro</a></li>
@@ -46,10 +43,12 @@
             <li role="separator" class="divider"></li>     
             <li id="menulink-admin-">
               <a href="{{ url('/scripts/saveStock.php') }}" target="_blank">(*) Guardar Stock actual</a>
-            </li>  
+            </li>
+            <!--  
             <li id="menulink-admin-">
               <a href="{{ url('/scripts/resetDatabase.php') }}">(*) Resetear Base de Datos</a>
-            </li>  
+            </li>
+            -->  
           </ul>
         </li>
         <li><a href="{{ url('/admin/ayuda') }}">Ayuda</a></li>

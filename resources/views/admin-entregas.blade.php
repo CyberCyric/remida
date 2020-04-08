@@ -16,18 +16,25 @@
     <div class="container">
         @include('admin-navbar')
         <div class="row">
-            <div class="col-md-6 titulo">Entregas</div>
+            <div class="col-md-6 titulo"> Entregas</div>
             <div class="col-md-6 text-right"><button class="btn btn-primary" id="butNuevaEntrega" type="submit">Nueva Entrega</button></div>
+        </div>
+        <div>
+            <h5>Elegir año: 
+                @foreach ($agnos as $agno)
+                    <a href="{{ url('/admin/entregas/'.$agno->agno) }}">{{ $agno->agno }}</a> |
+                @endforeach
+            </h5>
         </div>
         <table class="table">
             <tr class="table-header">
-                <th>Número</th>
-                <th>Fecha</th>
+                <th><h4>{{$agno_seleccionado}}</h4></th>
+                <th></th>
             </tr>
             @foreach ($entregas as $entrega)
             <tr class="selectable" id="row-{{ $entrega->entrega_id }}" onClick="javascript:verItems({{ $entrega->entrega_id }})">
-                <td>{{ $entrega->entrega_id }}</td>
-                <td>{{ \Carbon\Carbon::parse($entrega->fecha)->format('d/m/Y')}}</td>
+                <td>mes_castellano({{ \Carbon\Carbon::parse($entrega->fecha)->format('m')}}) {{ \Carbon\Carbon::parse($entrega->fecha)->format('d, Y')}}</td>
+                <td>Entrega Nro. {{ $entrega->entrega_id }}</td>
             </tr>
             @endforeach
         </table>

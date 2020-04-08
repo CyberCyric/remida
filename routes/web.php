@@ -39,7 +39,7 @@ Route::post('/admin/empresa/', 'EmpresaController@store')->middleware('auth');
 Route::get('/admin/empresa/', 'EmpresaController@create')->middleware('auth');
 
 /* ENTREGAS */
-Route::get('/admin/entregas', 'EntregaController@list')->middleware('auth')->name('entregas');
+Route::get('/admin/entregas/{agno?}', 'EntregaController@list')->middleware('auth')->name('entregas');
 Route::get('/admin/entrega/', 'EntregaController@create')->middleware('auth');
 Route::post('/admin/entrega/', 'EntregaController@store')->middleware('auth');
 Route::get('/admin/entrega/{id}', 'EntregaController@show')->middleware('auth');

@@ -39,11 +39,22 @@ class EntregaController extends Controller
         return  $json;  
     }
 
-    public function list(){
+    public function list($agno_seleccionado = ''){
+        
+        if ($agno_seleccionado == '') { 
+            $agno_seleccionado = date('Y');
+        }
+        $from = date($agno_seleccionado.'-01-01');
+        $to = date($agno_seleccionado.'-12-31');
+        
         $entregas = DB::table('entrega')
+        ->whereBetween('fecha',[$from, $to])
         ->orderBy('fecha', 'DESC')
         ->orderBy('entrega_id', 'DESC')
-        ->paginate(100);        
-        return view('admin-entregas', compact('id', 'entregas'));
+        ->paginate(500);        
+
+        $agnos = DB::table('entrega')->distinct('YEAR(fecha)')->selectRaw('YEAR(fecha) AS agno')->get();
+
+        return view('admin-entregas', compact('id', 'entregas', 'agnos', 'agno_seleccionado'));
     }
 }
