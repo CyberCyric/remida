@@ -64,20 +64,19 @@
                     <h4 class="modal-title" id="myModalLabel">Agregar:</h4>
                 </div>
                 <div class="modal-body" id="msgModal">
-                
-                    <div class="form-group">
-                        <label for="empresa_id">Empresa:</label>
-                        <select name="empresa_id" id="cmbEmpresa" class="form-control">
-                            @foreach ($empresas as $empresa)"
-                                <option value="{{ $empresa->empresa_id }}">{{ $empresa->razon_social }}</option>
-                            @endforeach
-                        </select>
-                    </div>
                     <div class="form-group">
                        <label for="material_id">Material:</label>
                         <select name="material_id" id="cmbMaterial" class="form-control">
                              @foreach ($materiales as $material)
                                 <option value="{{ $material->material_id }}">{{ $material->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa_id">Empresa:</label>
+                        <select name="empresa_id" id="cmbEmpresa" class="form-control">
+                            @foreach ($empresas as $empresa)"
+                                <option value="{{ $empresa->empresa_id }}">{{ $empresa->razon_social }}</option>
                             @endforeach
                         </select>
                     </div>
