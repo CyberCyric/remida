@@ -17,10 +17,19 @@
         @include('admin-navbar')
         <div class="row">
             <div class="col-md-6 titulo">Contenido de la Entrega #{{$entrega_id}} ({{ \Carbon\Carbon::parse($entrega->fecha)->format('d/m/Y')}})</div>
+
             <div class="col-md-6 text-right">
-                <button class="btn btn-primary" id="butNuevoItem" type="button">Nuevo contenido</button>
+                <div class="btn-group">
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="butNuevoItem" type="button">Nuevo Contenido <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        @foreach ($materiales as $material)
+                            <li><a href="javascript:showModal({{ $material->material_id }})">{{$material->nombre}}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
                 <button class="btn btn-default" id="butVolver" type="button" onClick="javascript:volver({{$entrega_id}})">Volver</button>
             </div>
+
         </div>
         <table class="table">
             <tr class="table-header">
@@ -119,9 +128,10 @@
         }
     }
 
-    $("#butNuevoItem").click(function() {
+    function showModal(material_id){
+        $("#cmbMaterial").val(material_id);
         $('#modalEntregaItem').modal('show');
-    });
+    }
 
     function volver(id){
         var url = "{{ url('/admin/entregas/') }}";

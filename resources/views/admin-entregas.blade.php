@@ -28,12 +28,13 @@
         </div>
         <table class="table">
             <tr class="table-header">
-                <th><h4>{{$agno_seleccionado}}</h4></th>
+                <th style="width: 20%"><h4>{{$agno_seleccionado}}</h4></th>
                 <th></th>
             </tr>
             @foreach ($entregas as $entrega)
             <tr class="selectable" id="row-{{ $entrega->entrega_id }}" onClick="javascript:verItems({{ $entrega->entrega_id }})">
-                <td>mes_castellano({{ \Carbon\Carbon::parse($entrega->fecha)->format('m')}}) {{ \Carbon\Carbon::parse($entrega->fecha)->format('d, Y')}}</td>
+                <td>{{ mes_castellano(\Carbon\Carbon::parse($entrega->fecha)->format('m')) }} 
+                    {{ \Carbon\Carbon::parse($entrega->fecha)->format('d, Y')}}</td>
                 <td>Entrega Nro. {{ $entrega->entrega_id }}</td>
             </tr>
             @endforeach
@@ -52,7 +53,8 @@
         $("#navbar li#menulink-admin-entregas").addClass('menulink-active');
     });
     $("#butNuevaEntrega").click(function() {
-        window.location.href = "entrega/";
+        var url = "{{ url('/admin/entrega/') }}";
+        window.location.href = url;
     });
 
     function verItems(id) {

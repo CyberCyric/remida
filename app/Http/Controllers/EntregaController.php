@@ -27,7 +27,7 @@ class EntregaController extends Controller
             'fecha' =>  $data['agno']."-".$data['mes']."-".$data['dia']
         ]);
 
-        return redirect()->route('entregas');
+        return redirect()->route('entregas', ['agno' => $data['agno']]);
     }
 
     public function show($id)
