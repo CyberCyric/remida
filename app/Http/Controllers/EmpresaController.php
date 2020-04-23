@@ -57,7 +57,6 @@ class EmpresaController extends Controller
                 'email' => $data['email'],
                 'entrega_madera'=> $data['entrega_madera'],
                 'entrega_papel'=> $data['entrega_papel'],
-                'entrega_carton'=> $data['entrega_carton'],
                 'entrega_plastico'=> $data['entrega_plastico'],
                 'entrega_metal'=> $data['entrega_metal'],
                 'entrega_textil'=> $data['entrega_textil'],
@@ -119,7 +118,6 @@ class EmpresaController extends Controller
         $empresa->entrega_madera = $data['entrega_madera'];
         $empresa->entrega_papel = $data['entrega_papel'];
         $empresa->entrega_papel = $data['entrega_papel'];
-        $empresa->entrega_carton = $data['entrega_carton'];
         $empresa->entrega_plastico = $data['entrega_plastico'];
         $empresa->entrega_metal = $data['entrega_metal'];
         $empresa->entrega_textil = $data['entrega_textil'];

@@ -42,6 +42,7 @@ Route::get('/admin/empresa/', 'EmpresaController@create')->middleware('auth');
 Route::get('/admin/entregas/{agno?}', 'EntregaController@list')->middleware('auth')->name('entregas');
 Route::get('/admin/entrega/', 'EntregaController@create')->middleware('auth');
 Route::post('/admin/entrega/', 'EntregaController@store')->middleware('auth');
+Route::delete('/admin/entrega/{entrega_id}/', 'EntregaController@delete')->middleware('auth');
 Route::get('/admin/entrega/{id}', 'EntregaController@show')->middleware('auth');
 Route::get('/admin/entrega_items/{id}', 'EntregaItemController@showItems')->middleware('auth');
 Route::post('/admin/entrega_items/{id}', 'EntregaItemController@storeItem')->middleware('auth');
@@ -55,7 +56,6 @@ Route::delete('/admin/usuario/{id}', 'UsuarioController@delete')->middleware('au
 
 
 Route::get('/admin/logout', 'Auth\LoginController@logout')->middleware('auth');
-
 
 /************* REPORTES ****************/
 Route::get('/admin/', 'ReporteController@reporteStock')->name('stock');

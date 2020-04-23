@@ -79,7 +79,7 @@
                         </div>
                         @if ($retiro->aprobado == 'N')
                         <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockMadera" class="form-control text-center" value="{{ $stock["MADERA"] }}" disabled />
+                            <input type="number" id="inputStockMadera" class="form-control text-center" value="{{ $stock["MAD"] }}" disabled />
                         </div>
                         @endif
                         <div class="col-md-6" align="left" data-original-title="">
@@ -95,27 +95,11 @@
                         </div>
                         @if ($retiro->aprobado == 'N')
                         <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockPapel" class="form-control text-center" value="{{ $stock["PAPEL"] }}" disabled />
+                            <input type="number" id="inputStockPapel" class="form-control text-center" value="{{ $stock["PYC"] }}" disabled />
                         </div>
                         @endif
                         <div class="col-md-6" align="left" data-original-title="">
                             {{ $retiro->papel_obs }}
-                        </div>
-                    </div>
-                    <div class="row bkg-1" data-original-title="">
-                        <div class="col-md-2" align="left" data-original-title="">
-                            <h3>CARTÓN</h3>
-                        </div>
-                        <div class="col-md-2" align="left" data-original-title="">
-                            <input type="number" min="0" class="form-control text-center" value="{{ $retiro->carton }}" id="inputCarton" name="carton" placeholder="" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
-                        </div>
-                        @if ($retiro->aprobado == 'N')
-                        <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockCarton" class="form-control text-center" value="{{ $stock["CARTON"] }}" disabled />
-                        </div>
-                        @endif
-                        <div class="col-md-6" align="left" data-original-title="">
-                            {{ $retiro->carton_obs }}
                         </div>
                     </div>
                     <div class="row bkg-2" data-original-title="">
@@ -127,7 +111,7 @@
                         </div>
                         @if ($retiro->aprobado == 'N')
                         <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockPlastico" class="form-control text-center" value="{{ $stock["PLASTICO"] }}" disabled />
+                            <input type="number" id="inputStockPlastico" class="form-control text-center" value="{{ $stock["PLA"] }}" disabled />
                         </div>
                         @endif
                         <div class="col-md-6" align="left" data-original-title="">
@@ -143,7 +127,7 @@
                         </div>
                         @if ($retiro->aprobado == 'N')
                         <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockMetal" class="form-control text-center" value="{{ $stock["METAL"] }}" disabled />
+                            <input type="number" id="inputStockMetal" class="form-control text-center" value="{{ $stock["MET"] }}" disabled />
                         </div>
                         @endif
                         <div class="col-md-6" align="left" data-original-title="">
@@ -159,7 +143,7 @@
                         </div>
                         @if ($retiro->aprobado == 'N')
                         <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockTextil" class="form-control text-center" value="{{ $stock["TEXTIL"] }}" disabled />
+                            <input type="number" id="inputStockTextil" class="form-control text-center" value="{{ $stock["TEX"] }}" disabled />
                         </div>
                         @endif
                         <div class="col-md-6" align="left" data-original-title="">
@@ -175,7 +159,7 @@
                         </div>
                         @if ($retiro->aprobado == 'N')
                         <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockVidrio" class="form-control text-center" value="{{ $stock["VIDRIO"] }}" disabled />
+                            <input type="number" id="inputStockVidrio" class="form-control text-center" value="{{ $stock["VID"] }}" disabled />
                         </div>
                         @endif
                         <div class="col-md-6" align="left" data-original-title="">
@@ -191,7 +175,7 @@
                         </div>
                         @if ($retiro->aprobado == 'N')
                         <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockNatural" class="form-control text-center" value="{{ $stock["NATURAL"] }}" disabled />
+                            <input type="number" id="inputStockNatural" class="form-control text-center" value="{{ $stock["NAT"] }}" disabled />
                         </div>
                         @endif
                         <div class="col-md-6" align="left" data-original-title="">
@@ -207,7 +191,7 @@
                         </div>
                         @if ($retiro->aprobado == 'N')
                         <div class="col-md-2" align="center" data-original-title="">
-                            <input type="number" id="inputStockOtros" class="form-control text-center" value="{{ $stock["OTROS"] }}" disabled />
+                            <input type="number" id="inputStockOtros" class="form-control text-center" value="{{ $stock["OTR"] }}" disabled />
                         </div>
                         @endif
                         <div class="col-md-6" align="left" data-original-title="">
@@ -230,10 +214,10 @@
                 </div>
             </div>
         </form>
-        @if($isAdmin == false)
+        @if($isAdmin == true)
             <form action="{{ route('retiros.destroy', $retiro_id)}}" method="post" id="formEliminarRetiro">
-                    @csrf
-                    @method('DELETE')
+                @csrf
+                @method('DELETE')
             </form>
         @endif        
     </div>

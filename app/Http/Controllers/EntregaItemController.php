@@ -14,12 +14,12 @@ class EntregaItemController extends Controller
     {
        $items = DB::table('entrega_item')
         ->join('empresa', 'empresa.empresa_id', '=', 'entrega_item.empresa_id')
-        ->join('material', 'material.material_id', '=', 'entrega_item.material_id')
+        ->join('stock', 'stock.material_id', '=', 'entrega_item.material_id')
         ->where('entrega_item.entrega_id', '=', $entrega_id)
-        ->selectRaw('entrega_item.item_id, entrega_item.entrega_id, entrega_item.empresa_id, entrega_item.material_id, (entrega_item.cantidad / 1000) AS cantidad, entrega_item.descripcion, empresa.razon_social, material.nombre AS material')
+        ->selectRaw('entrega_item.item_id, entrega_item.entrega_id, entrega_item.empresa_id, entrega_item.material_id, (entrega_item.cantidad / 1000) AS cantidad, entrega_item.descripcion, empresa.razon_social, stock.nombre AS material')
         ->paginate(100);
 
-        $materiales = DB::table('material')->get();
+        $materiales = DB::table('stock')->get();
 
         $empresas = DB::table('empresa')->orderBy('razon_social')->get();
 
@@ -32,7 +32,7 @@ class EntregaItemController extends Controller
 
         $item = DB::table('entrega_item')->where('item_id' , '=', $item_id)->first();
 
-        DB::table('material')
+        DB::table('stock')
             ->where('material_id', $item->material_id)
             ->decrement('stock', $item->cantidad);
 
@@ -41,10 +41,9 @@ class EntregaItemController extends Controller
             ->where('item_id', '=', $item_id)
             ->delete();
 
-        header('location:admin/entrega_items/'.$entrega_id);
+            return($entrega_id);
 
     }
-
 
     public function storeItem(Request $request)
      {
@@ -64,7 +63,7 @@ class EntregaItemController extends Controller
             ->update(['fecha_ingreso' => date('Y-m-d') ]);
         }
 
-        DB::table('material')
+        DB::table('stock')
             ->where('material_id', $data['material_id'])
             ->increment('stock', $data['cantidad'] * 1000);
 

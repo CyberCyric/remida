@@ -43,7 +43,7 @@
                 <span class="glyphicon glyphicon-ok" >Aprobado</span>
               </span>
               @else
-              <span class="label label-danger icono_retiro_pendiente">
+              <span class="label label-warning icono_retiro_pendiente">
                 <span class="glyphicon glyphicon-time">&nbsp;Pendiente</span>
               </span>
               @endif

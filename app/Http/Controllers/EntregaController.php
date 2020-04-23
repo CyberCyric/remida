@@ -39,6 +39,31 @@ class EntregaController extends Controller
         return  $json;  
     }
 
+    public function delete($entrega_id){
+
+        $items = DB::table('entrega_item')
+        ->where('entrega_item.entrega_id', '=', $entrega_id)
+        ->selectRaw('entrega_item.*')
+        ->get();
+
+       foreach ($items as $item){
+            DB::table('stock')
+                ->where('material_id', $item->material_id)
+                ->decrement('stock', $item->cantidad);
+
+            DB::table('entrega_item')
+                ->where('entrega_id', '=', $entrega_id)
+                ->where('item_id', '=', $item_id)
+                ->delete();
+        }
+
+        $entrega = Entrega::find($entrega_id);
+        $entrega->delete();
+
+        return redirect()->route('entregas');
+
+    }
+
     public function list($agno_seleccionado = ''){
         
         if ($agno_seleccionado == '') { 
@@ -53,7 +78,7 @@ class EntregaController extends Controller
         ->orderBy('entrega_id', 'DESC')
         ->paginate(500);        
 
-        $agnos = DB::table('entrega')->distinct('YEAR(fecha)')->selectRaw('YEAR(fecha) AS agno')->get();
+        $agnos = DB::table('entrega')->distinct('YEAR(fecha)')->selectRaw('YEAR(fecha) AS agno')->orderByDesc('fecha')->get();
 
         return view('admin-entregas', compact('id', 'entregas', 'agnos', 'agno_seleccionado'));
     }

@@ -192,7 +192,6 @@ class ReporteController extends Controller
         $labels = array();
         $dsMadera = array();
         $dsPapel = array();
-        $dsCarton = array();
         $dsPlastico = array();
         $dsMetal = array();
         $dsTextil = array();
@@ -205,7 +204,6 @@ class ReporteController extends Controller
             $labels[$i] = $row->fecha;
             $dsMadera[$i] = $row->madera;
             $dsPapel[$i] = $row->papel;
-            $dsCarton[$i] = $row->carton;
             $dsPlastico[$i] = $row->plastico;
             $dsMetal[$i] = $row->metal;
             $dsTextil[$i] = $row->textil;
@@ -215,7 +213,7 @@ class ReporteController extends Controller
             $i = $i + 1;
         }
 
-        return view('admin-reporte-stock-historico', compact('labels','dsMadera','dsPapel','dsCarton','dsPlastico','dsMetal','dsTextil','dsVidrio','dsNatural','dsOtros'));
+        return view('admin-reporte-stock-historico', compact('labels','dsMadera','dsPapel','dsPlastico','dsMetal','dsTextil','dsVidrio','dsNatural','dsOtros'));
     }
  
 

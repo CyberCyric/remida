@@ -26,8 +26,10 @@
         </ol>
       </div>
 
+      <div id="helpSections">
+
       <section>
-        <h4>Agregar una nueva entrega</h4>
+        <h5>Agregar una nueva entrega</h5>
         <i>Una entrega es un ingreso de material en una determinada fecha. La entrega puede incluir distintos tipos de material y distintas empresas proveedoras. Por lo tanto, el único dato necesario para crear una entrega es su fecha.<br/>
         La entrega representa un "contenedor" al que luego se cargan los materiales recibidos. (Ver sección siguiente).</i><br /><br />
         Para crear una nueva entrega: 
@@ -36,6 +38,8 @@
         <li>Ingresar la fecha de la entrega. (Por defecto aparece cargada la fecha actual).</li>        
       </section>
       <hr />
+
+    </div>
     
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -30,6 +30,7 @@ class RetiroController extends Controller
 
     public function listPendientes(){
         $retiros = DB::table('retiros')
+        ->join('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
         ->where('aprobado','N')
         ->orderBy('fecha', 'desc')
         ->orderBy('retiro_id', 'desc')
@@ -58,6 +59,7 @@ class RetiroController extends Controller
         ->where('aprobado','N')
         ->orderBy('fecha', 'desc')
         ->orderBy('retiro_id', 'desc')
+        ->selectRaw('distrito.nombre AS distrito, retiros.*')
         ->paginate(100);        
         return view('admin-retiros', compact('id', 'retiros'));
     }
@@ -66,47 +68,42 @@ class RetiroController extends Controller
         $retiro = Retiro::find($id);
 
         if ($retiro->madera > 0)    {
-            DB::table('material')
+            DB::table('stock')
             ->where('material_id', 1)
             ->update(['stock' => DB::raw('stock - '.$retiro->madera) ]);
         }
         if ($retiro->papel > 0)     { 
-            DB::table('material')
+            DB::table('stock')
             ->where('material_id', 2)
             ->update(['stock' => DB::raw('stock - '.$retiro->papel) ]);
         }
-        if ($retiro->carton > 0)    { 
-            DB::table('material')
-            ->where('material_id', 3)
-            ->update(['stock' => DB::raw('stock - '.$retiro->carton) ]);
-        }
         if ($retiro->plastico > 0)  { 
-            DB::table('material')
+            DB::table('stock')
             ->where('material_id', 4)
             ->update(['stock' => DB::raw('stock - '.$retiro->plastico) ]);
         }
         if ($retiro->metal > 0)     { 
-            DB::table('material')
+            DB::table('stock')
             ->where('material_id', 5)
             ->update(['stock' => DB::raw('stock - '.$retiro->metal) ]);
         }
         if ($retiro->textil > 0)    { 
-            DB::table('material')
+            DB::table('stock')
             ->where('material_id', 6)
             ->update(['stock' => DB::raw('stock - '.$retiro->textil) ]);
         }
         if ($retiro->vidrio > 0)    { 
-            DB::table('material')
+            DB::table('stock')
             ->where('material_id', 7)
             ->update(['stock' => DB::raw('stock - '.$retiro->vidrio) ]);
         }
         if ($retiro->natural > 0)     { 
-            DB::table('material')
+            DB::table('stock')
             ->where('material_id', 8)
             ->update(['stock' => DB::raw('stock - '.$retiro->natural) ]);
         }
         if ($retiro->otros > 0)     { 
-            DB::table('material')
+            DB::table('stock')
             ->where('material_id', 8)
             ->update(['stock' => DB::raw('stock - '.$retiro->otros) ]);
         }
@@ -142,8 +139,6 @@ class RetiroController extends Controller
             'madera_obs' => $data['madera_obs'],
             'papel' => $data['papel'],
             'papel_obs' => $data['papel_obs'],
-            'carton' => $data['carton'],
-            'carton_obs' => $data['carton_obs'],
             'plastico' => $data['plastico'],
             'plastico_obs' => $data['plastico_obs'],
             'metal' => $data['metal'],
@@ -177,15 +172,15 @@ class RetiroController extends Controller
         ->join('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
         ->leftJoin('users', 'retiros.aprobado_por', '=', 'users.id')
         ->where('retiros.retiro_id','=',$retiro_id)
-        ->selectRaw('retiros.retiro_id, retiros.aprobado, retiros.fecha, DATE_FORMAT(retiros.aprobado_fecha, "%d/%m/%Y") AS aprobado_fecha, retiros.nombre, retiros.institucion, retiros.distrito_id, retiros.proyecto_institucional, retiros.aprobado_por, retiros.madera, retiros.madera_obs, retiros.papel, retiros.papel_obs, retiros.carton, retiros.carton_obs, retiros.plastico, retiros.plastico_obs, retiros.metal, retiros.metal_obs, retiros.textil, retiros.textil_obs, retiros.vidrio, retiros.vidrio_obs, retiros.natural, retiros.natural_obs, retiros.otros, retiros.otros_obs, retiros.evento, retiros.lugar_retiro, distrito.nombre AS nombreDistrito, users.name AS aprobador')
+        ->selectRaw('retiros.retiro_id, retiros.aprobado, retiros.fecha, DATE_FORMAT(retiros.aprobado_fecha, "%d/%m/%Y") AS aprobado_fecha, retiros.nombre, retiros.institucion, retiros.distrito_id, retiros.proyecto_institucional, retiros.aprobado_por, retiros.madera, retiros.madera_obs, retiros.papel, retiros.papel_obs,  retiros.plastico, retiros.plastico_obs, retiros.metal, retiros.metal_obs, retiros.textil, retiros.textil_obs, retiros.vidrio, retiros.vidrio_obs, retiros.natural, retiros.natural_obs, retiros.otros, retiros.otros_obs, retiros.evento, retiros.lugar_retiro, distrito.nombre AS nombreDistrito, users.name AS aprobador')
         ->first();   
 
         // dd(DB::getQueryLog());
 
-        $materiales = DB::table('material')->select('material.*')->get();
+        $materiales = DB::table('stock')->select('stock.*')->get();
         $stock = [];
         foreach ($materiales as $material){
-            $stock[$material->nombre] = $material->stock;
+            $stock[$material->codigo] = $material->stock;
         }
 
         return view('admin-retiro', compact('retiro', 'stock', 'retiro_id','isAdmin'));
@@ -195,29 +190,6 @@ class RetiroController extends Controller
         $distritos = DB::table('distrito')
         ->get();        
         return view('retiro', compact('distritos'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
 }

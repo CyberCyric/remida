@@ -33,7 +33,7 @@
         </div>
         <table class="table">
             <tr class="table-header">
-                <th>Emprea</th>
+                <th>Empresa</th>
                 <th>Material</th>
                 <th>Cantidad (en KGs)</th>
                 <th>Descripcion</th>
@@ -57,7 +57,7 @@
     <div class="modal fade" id="modalEntregaItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ url("admin/entrega_items/$entrega_id") }}" method="POST"/>
+                <form action="{{ url("admin/entrega_items/$entrega_id") }}" method="POST" id="formModal"/>
                 {{ csrf_field() }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="form-group">
                         <label for="cantidad">Cantidad (en KGs):</label>
-                        <input type="text" name="cantidad" class="form-control" value="0"/>
+                        <input type="text" name="cantidad" id="inputCantidad" class="form-control" value="0" />
                     </div>
                     <div class="form-group">
                        <label for="cantidad">Descripcion:</label>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="entrega_id" value="{{ $entrega_id }}" />
-                    <button type="submit" class="btn btn-default">Aceptar</button>
+                    <button type="button" class="btn btn-default" id="butSubmit" onClick="javascript:agregarItem();">Aceptar</button>
                 </div>
             </form>
             </div>
@@ -135,6 +135,12 @@
     function volver(id){
         var url = "{{ url('/admin/entregas/') }}";
         window.location.href = url;
+    }
+
+    function agregarItem(){
+        // Reemplazo las comas por puntos
+        $("#inputCantidad").val( $("#inputCantidad").val().replace(",",".") );
+        $("#formModal").submit();
     }
 
     function verItems(id) {

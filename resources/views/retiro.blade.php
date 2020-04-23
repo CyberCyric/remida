@@ -43,6 +43,13 @@
                             <input class="form-check-input" type="radio" id="radLugarRetiroViajero" name="lugar_retiro" value="VIAJERO">
                            </div>
 
+                           <div class="form-check mb-2 mr-sm-2">
+                           <label class="form-check-label" for="inlineFormCheck">
+                              ReMida Eventos
+                            </label>
+                            <input class="form-check-input" type="radio" id="radLugarRetiroEventos" name="lugar_retiro" value="EVENTOS">
+                           </div>
+
                         </form>
 
                   </div>
@@ -114,24 +121,13 @@
                   </div>
                   <div class="row bkg2" data-original-title="">
                      <div class="col-md-2" align="left" data-original-title="">
-                        <h3>PAPEL</h3>
+                        <h3>PAPEL Y CARTÓN</h3>
                      </div>
                      <div class="col-md-2" align="left" data-original-title=""><h3 class="visible-xs">Cantidad (Gms.) </h3>
                         <input type="number" min="0" class="form-control text-right"  name="papel" id="inputPapel" placeholder="" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                      </div>
                      <div class="col-md-8" align="left" data-original-title=""><h3 class="visible-xs">Observaciones </h3>
                         <textarea name="papel_obs"  class="form-control observaciones-txtarea"></textarea>  
-                     </div>
-                  </div>
-                  <div class="row bkg1" data-original-title="">
-                     <div class="col-md-2" align="left" data-original-title="">
-                        <h3>CARTÓN</h3>
-                     </div>
-                     <div class="col-md-2" align="left" data-original-title=""><h3 class="visible-xs">Cantidad (Gms.) </h3>
-                        <input type="number" min="0" class="form-control text-right"  id="inputCarton" name="carton" placeholder="" onkeydown="javascript: return event.keyCode == 69 ? false : true">
-                     </div>
-                     <div class="col-md-8" align="left" data-original-title=""><h3 class="visible-xs">Observaciones </h3>
-                        <textarea name="carton_obs"  class="form-control observaciones-txtarea"></textarea>  
                      </div>
                   </div>
                   <div class="row bkg2" data-original-title="">
@@ -233,7 +229,7 @@
               msg += " - Seleccioná el distrito.\n";
           }
 
-          if ( ($("#radLugarRetiroCentro").is(':checked') == false) && ($("#radLugarRetiroViajero").is(':checked') == false) ){
+          if ( ($("#radLugarRetiroCentro").is(':checked') == false) && ($("#radLugarRetiroViajero").is(':checked') == false) && ($("#radLugarRetiroEventos").is(':checked') == false) ){
             error = true;
             msg += " - Seleccioná el lugar de retiro. \n";
           } 
