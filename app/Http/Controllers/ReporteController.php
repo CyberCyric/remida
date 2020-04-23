@@ -15,7 +15,7 @@ class ReporteController extends Controller
     		->where('retiros.aprobado','S')
     		->count();
     	$empresas = DB::table('empresa')->count();
-    	$materiales = DB::table('material')->select('nombre', 'stock')->get();
+    	$materiales = DB::table('stock')->select('nombre', 'stock')->get();
         return view('admin-reporte-stock', compact('entregas', 'retiros', 'empresas', 'materiales'));
 	}
 
@@ -33,7 +33,6 @@ class ReporteController extends Controller
         ->selectRaw('empresa.razon_social, DATE_FORMAT(fecha_ingreso, "%d/%m/%Y") AS fecha_ingreso, CONCAT(
                 IF(empresa.entrega_madera = "S", "MADERA, ", ""), 
                 IF(empresa.entrega_papel = "S", "PAPEL, ", ""), 
-                IF(empresa.entrega_carton = "S", "CARTON, ", ""), 
                 IF(empresa.entrega_plastico = "S", "PLASTICO, ", ""), 
                 IF(empresa.entrega_metal = "S", "METAL, ", ""), 
                 IF(empresa.entrega_textil = "S", "TEXTIL, ", ""), 
@@ -50,48 +49,64 @@ class ReporteController extends Controller
         return view('admin-reporte-mapa-distritos');
     }
 
-    public function getDataLugaresEntrega($desde = '', $hasta = ''){
+    public function getDataReporteRetiros($desde = '', $hasta = ''){
 
         if ($desde == '') {$desde = date('Y')."-".date('m')."-01";}
         if ($hasta == '') {$hasta = date('Y')."-".date('m')."-31";}
 
-        $lugares = DB::table('retiros')
+        $centro = DB::table('retiros')
         ->where('retiros.aprobado_fecha', '>=', $desde)
         ->where('retiros.aprobado_fecha', '<=', $hasta)
-        ->selectRaw('retiros.lugar_retiro, SUM(retiros.madera) AS MADERA,
-            SUM(retiros.papel) AS PAPEL,
-            SUM(retiros.carton) AS CARTON,
-            SUM(retiros.plastico) AS PLASTICO,
-            SUM(retiros.metal) AS METAL,
-            SUM(retiros.textil) AS TEXTIL,
-            SUM(retiros.vidrio) AS VIDRIO,
-            SUM(retiros.natural) AS NATURAL_TOTAL,
-            SUM(retiros.otros) AS OTROS')
-        ->groupBy('retiros.lugar_retiro')
+        ->where('retiros.lugar_retiro', '=', 'CENTRO')
+        ->selectRaw('SUM(retiros.madera) AS MAD,
+            SUM(retiros.papel) AS PYC,
+            SUM(retiros.plastico) AS PLA,
+            SUM(retiros.metal) AS MET,
+            SUM(retiros.textil) AS TEX,
+            SUM(retiros.vidrio) AS VID,
+            SUM(retiros.natural) AS NAT,
+            SUM(retiros.otros) AS OTR')
         ->get();
 
-        $json = json_encode($lugares);
-        return  $json;
-    }
-
-    function getDataLugaresEntregaTotales($desde = '', $hasta = ''){
-
-        if ($desde == '') {$desde = date('Y')."-".date('m')."-01";}
-        if ($hasta == '') {$hasta = date('Y')."-".date('m')."-31";}
-
-        $lugares = DB::table('retiros')
+        $viajero = DB::table('retiros')
         ->where('retiros.aprobado_fecha', '>=', $desde)
         ->where('retiros.aprobado_fecha', '<=', $hasta)
-        ->selectRaw('retiros.lugar_retiro, COUNT(retiros.retiro_id) AS total')
-        ->groupBy('retiros.lugar_retiro')
+        ->where('retiros.lugar_retiro', '=', 'VIAJERO')
+        ->selectRaw('SUM(retiros.madera) AS MAD,
+            SUM(retiros.papel) AS PYC,
+            SUM(retiros.plastico) AS PLA,
+            SUM(retiros.metal) AS MET,
+            SUM(retiros.textil) AS TEX,
+            SUM(retiros.vidrio) AS VID,
+            SUM(retiros.natural) AS NAT,
+            SUM(retiros.otros) AS OTR')
         ->get();
 
-        $json = json_encode($lugares);
-        return  $json;        
+        $eventos = DB::table('retiros')
+        ->where('retiros.aprobado_fecha', '>=', $desde)
+        ->where('retiros.aprobado_fecha', '<=', $hasta)
+        ->where('retiros.lugar_retiro', '=', 'EVENTOS')
+        ->selectRaw('SUM(retiros.madera) AS MAD,
+            SUM(retiros.papel) AS PYC,
+            SUM(retiros.plastico) AS PLA,
+            SUM(retiros.metal) AS MET,
+            SUM(retiros.textil) AS TEX,
+            SUM(retiros.vidrio) AS VID,
+            SUM(retiros.natural) AS NAT,
+            SUM(retiros.otros) AS OTR')
+        ->get();
+
+        $retiros["LABELS"] = array("Madera (grms)","Papel y Cartón (grms)","Plástico (grms)","Metal (grms)","Textil (grms)","Vidrio (grms)","Natural (grms)","Otros (grms)");
+
+        $retiros["DATA"]["CENTRO"] = $centro;
+        $retiros["DATA"]["VIAJERO"] = $viajero;
+        $retiros["DATA"]["EVENTOS"] = $eventos;
+
+        return  $retiros;
     }
 
-    public function reporteLugaresEntrega(){
-        return view('admin-reporte-lugar-entrega');
+    public function reporteRetiros(){
+        return view('admin-reporte-retiros');
     }    
 
     public function reporteDistritosTotales($desde = '', $hasta = ''){
@@ -122,7 +137,6 @@ class ReporteController extends Controller
         ->selectRaw('distrito.distrito_id, 
             SUM(retiros.madera) AS madera,
             SUM(retiros.papel) AS papel,
-            SUM(retiros.carton) AS carton,
             SUM(retiros.plastico) AS plastico,
             SUM(retiros.metal) AS metal,
             SUM(retiros.textil) AS textil,
@@ -154,10 +168,10 @@ class ReporteController extends Controller
         $entregas = DB::table('entrega')
         ->join('entrega_item', 'entrega.entrega_id', '=', 'entrega_item.entrega_id')
         ->join('empresa', 'empresa.empresa_id', '=', 'entrega_item.empresa_id')
-        ->join('material', 'entrega_item.material_id', '=', 'material.material_id')
+        ->join('stock', 'entrega_item.material_id', '=', 'stock.material_id')
         ->where('entrega.fecha', '>=', $desde)
         ->where('entrega.fecha', '<=', $hasta)
-        ->selectRaw('entrega.entrega_id, DATE_FORMAT(entrega.fecha,"%d/%m/%Y") AS fecha, empresa.razon_social, entrega_item.*, material.nombre AS material')
+        ->selectRaw('entrega.entrega_id, DATE_FORMAT(entrega.fecha,"%d/%m/%Y") AS fecha, empresa.razon_social, entrega_item.*, stock.codigo')
         ->get();
 
         $json = json_encode($entregas);
@@ -170,7 +184,7 @@ class ReporteController extends Controller
         if ($hasta == '') {$hasta = date('Y')."-".date('m')."-31";}
 
         $historico = DB::table('stock_historico')
-        ->selectRaw('DATE_FORMAT(fecha, "%d/%m/%Y") AS fecha, madera, papel, carton, plastico, metal, textil, vidrio, naturales, otros')
+        ->selectRaw('DATE_FORMAT(fecha, "%d/%m/%Y") AS fecha, madera, papel, plastico, metal, textil, vidrio, naturales, otros')
         ->orderBy('fecha','DESC')
         ->limit(6)
         ->get();

@@ -23,32 +23,6 @@
   <body>
     <div class="container">
     @include('admin-navbar')
-
-    <!--
-    <div class="row">
-        <div class="alert-spot alert-spot-success col-md-4 dashboard-boxes">
-        <span class="glyphicon glyphicon-log-in"></span>
-        <div class="alert-link-text">
-          <h4>Entregas:  $entregas </h4>
-          <p class="dashboard-copete">Cantidad de entregas recibidas.</p>
-        </div>
-        </div>
-        <div class="alert-spot alert-spot-info col-md-4 dashboard-boxes">
-        <span class="glyphicon glyphicon glyphicon-log-out"></span>
-        <div class="alert-link-text">
-          <h4>Retiros:  $retiros </h4>
-          <p class="dashboard-copete">Cantidad de retiros aprobados.</p>
-        </div>
-        </div> 
-        <div class="alert-spot alert-spot-warning col-md-4 dashboard-boxes">
-        <span class="glyphicon glyphicon-briefcase"></span>
-        <div class="alert-link-text">
-          <h4>Empresas:  $empresas </h4>
-          <p class="dashboard-copete">Cantidad de empresas registradas en el sistema.</p>
-        </div>
-        </div>
-    </div>
-    -->
     <div><hr/></div>
 
   <div class="row well">
@@ -58,7 +32,6 @@
         var labels = {!! json_encode($labels) !!};
         var dsMadera = {!! json_encode($dsMadera) !!};
         var dsPapel = {!! json_encode($dsPapel) !!};
-        var dsCarton = {!! json_encode($dsCarton) !!};
         var dsPlastico = {!! json_encode($dsPlastico) !!};
         var dsMetal = {!! json_encode($dsMetal) !!};
         var dsTextil = {!! json_encode($dsTextil) !!};
@@ -84,14 +57,6 @@
                     data: dsPapel.reverse(),
                     backgroundColor: ['rgba(245,130,49, 0.4)'],
                     borderColor: ['rgba(245,130,49, 1)'],
-                    fill: false,
-                    borderWidth: 1
-                },
-                {
-                    label: 'Cartón',
-                    data: dsCarton.reverse(),
-                    backgroundColor: ['rgba(255,225,25, 0.4)'],
-                    borderColor: ['rgba(255,225,25, 1)'],
                     fill: false,
                     borderWidth: 1
                 },

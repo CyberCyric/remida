@@ -72,13 +72,66 @@
         <div>
             <hr />
         </div>
-        <div class="row well">
-            <table class="table table-stripped" id="tableResultados" style="display:none">
-            </table>
+        <div class="row well" style="display:none" id="divTableResultados">
+            <canvas id="myChart" ></canvas>
+            <hr />
+            <table class="table table-stripped" id="tableResultados" ></table>
         </div>
-        <button id="butExportar" data-export="export" class="btn btm-sm btn-default" style="display:none">Exportar</button>
 
         <script>
+        var myChart;
+        function drawChart(arrData, desde, hasta){
+            if (!(myChart === undefined)) {myChart.destroy();}
+
+            var ctx = document.getElementById("myChart").getContext('2d');
+
+            myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Madera', 'Papel y Cartón', 'Plástico', 'Metal', 'Textil', 'Vidrio', 'Natural', 'Otros'],
+                    datasets: [{
+                        data: [ arrData["MAD"], arrData["PYC"], arrData["PLA"], arrData["MET"], arrData["TEX"], arrData["VID"], arrData["NAT"], arrData["OTR"] ],
+                        backgroundColor: [
+                            'rgba(230,25,75, 0.4)',
+                            'rgba(245,130,49, 0.4)',
+                            'rgba(255,225,25, 0.4)',
+                            'rgba(188,246,12, 0.4)',
+                            'rgba(60,180,75, 0.4)',
+                            'rgba(66,99,216, 0.4)',
+                            'rgba(145,30,180, 0.4)',
+                            'rgba(128,128,128, 0.4)',
+                        ],
+                        borderColor: [
+                            'rgba(230,25,75, 1)',
+                            'rgba(245,130,49, 1)',
+                            'rgba(255,225,25, 1)',
+                            'rgba(188,246,12, 1)',
+                            'rgba(60,180,75, 1)',
+                            'rgba(66,99,216, 1)',
+                            'rgba(145,30,180, 1)',
+                            'rgba(128,128,128, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: "Entregas entre "+desde+" y "+hasta,
+                    fontSize: 14,
+                  },
+                  legend: {
+                    display: true,
+                  },
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    
+                }
+            });
+       
+        }
+        
+
         $(document).ready(function() {
              
             $("#navbar li").removeClass('menulink-active');
@@ -115,69 +168,68 @@
                     success: function(data) {
                         var obj = jQuery.parseJSON(data);
 
-                        $("#tableResultados").html('<caption>Entregas</caption><tr><th class="text-left">Entrega</th><th class="text-left">Empresa</th><th class="text-left">Fecha</th><th class="text-center">Madera</th><th class="text-center">Papel</th><th class="text-center">Cartón</th><th class="text-center">Plástico</th><th class="text-center">Metal</th><th class="text-center">Textil</th><th class="text-center">Vidrio</th><th class="text-center">Natural</th><th class="text-center">Otros</th></tr>');
+                        $("#tableResultados").html('<tr><th class="text-left">Entrega #</th><th class="text-left">Empresa</th><th class="text-left">Fecha</th><th class="text-center">Madera</th><th class="text-center">Papel</th><th class="text-center">Plástico</th><th class="text-center">Metal</th><th class="text-center">Textil</th><th class="text-center">Vidrio</th><th class="text-center">Natural</th><th class="text-center">Otros</th></tr>');
 
                         var total = new Array();
 
                         for (index = 0; index < obj.length; ++index) {
 
                             // Creo los Row con valor inicial 0
-
-                            var row = '<tr><td>'+obj[index]["entrega_id"]+'</td><td>'+obj[index]["razon_social"]+'</td><td>'+obj[index]["fecha"]+'</td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_MADERA" class="label spanValue label-default">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_PAPEL" class="label spanValue label-default">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_CARTON" class="label spanValue label-default">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_PLASTICO" class="label spanValue label-default">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_METAL" class="label spanValue label-default">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_TEXTIL" class="label spanValue label-default">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_VIDRIO" class="label spanValue label-default">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_NATURAL" class="label spanValue label-default">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_OTROS" class="label spanValue label-default">0</span></td></tr>';                         
+                            var row = '<tr><td>'+obj[index]["entrega_id"]+'</td><td>'+obj[index]["razon_social"]+'</td><td>'+obj[index]["fecha"]+'</td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_MAD" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_PYC" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_PLA" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_MET" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_TEX" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_VID" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_NAT" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_OTR" class=" spanValue ">0</span></td></tr>';                         
                                 $("#tableResultados").append(row);                           
 
                         }
 
-                        total["MADERA"] = 0;
-                        total["PAPEL"] = 0;
-                        total["CARTON"] = 0;
-                        total["PLASTICO"] = 0;
-                        total["METAL"] = 0;
-                        total["TEXTIL"] = 0;
-                        total["VIDRIO"] = 0;
-                        total["NATURAL"] = 0;
-                        total["OTROS"] = 0;
+                        total["MAD"] = 0;
+                        total["PYC"] = 0;
+                        total["PLA"] = 0;
+                        total["MET"] = 0;
+                        total["TEX"] = 0;
+                        total["VID"] = 0;
+                        total["NAT"] = 0;
+                        total["OTR"] = 0;
 
                         for (index = 0; index < obj.length; ++index) {
                             
-                            if( obj[index]["material"] == "MADERA") { total["MADERA"] += obj[index]["cantidad"] }
-                            if( obj[index]["material"] == "PAPEL") { total["PAPEL"] += obj[index]["cantidad"] }
-                            if( obj[index]["material"] == "CARTON") { total["CARTON"] += obj[index]["cantidad"] }
-                            if( obj[index]["material"] == "PLASTICO") { total["PLASTICO"] += obj[index]["cantidad"] }
-                            if( obj[index]["material"] == "METAL") { total["METAL"] += obj[index]["cantidad"] }
-                            if( obj[index]["material"] == "TEXTIL") { total["TEXTIL"] += obj[index]["cantidad"] }
-                            if( obj[index]["material"] == "VIDRIO") { total["VIDRIO"] += obj[index]["cantidad"] }
-                            if( obj[index]["material"] == "NATURAL") { total["NATURAL"] += obj[index]["cantidad"] }
-                            if( obj[index]["material"] == "OTROS") { total["OTROS"] += obj[index]["cantidad"] }
+                            // Sumo al total
+                            if( obj[index]["codigo"] == "MAD") { total["MAD"] += obj[index]["cantidad"] }
+                            if( obj[index]["codigo"] == "PYC") { total["PYC"] += obj[index]["cantidad"] }
+                            if( obj[index]["codigo"] == "PLA") { total["PLA"] += obj[index]["cantidad"] }
+                            if( obj[index]["codigo"] == "MET") { total["MET"] += obj[index]["cantidad"] }
+                            if( obj[index]["codigo"] == "TEX") { total["TEX"] += obj[index]["cantidad"] }
+                            if( obj[index]["codigo"] == "VID") { total["VID"] += obj[index]["cantidad"] }
+                            if( obj[index]["codigo"] == "NAT") { total["NAT"] += obj[index]["cantidad"] }
+                            if( obj[index]["codigo"] == "OTR") { total["OTR"] += obj[index]["cantidad"] }
 
-                            $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["material"]).html(obj[index]["cantidad"]);
+                            // Cargo la información
+                            var cantidad_formateada = new Intl.NumberFormat("es-ES").format(obj[index]["cantidad"]);
+                            $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["codigo"]).html(cantidad_formateada);
+                            /*
                                 if (obj[index]["cantidad"]>0){
-                                    $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["material"]).removeClass("label-default");
-                                    $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["material"]).addClass("label-primary");
+                                    $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["codigo"]).removeClass("");
+                                    $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["codigo"]).addClass("label-primary");
                                 } else {
-                                    $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["material"]).removeClass("label-primary");
-                                    $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["material"]).addClass("label-default");
+                                    $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["codigo"]).removeClass("label-primary");
+                                    $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["codigo"]).addClass("");
                                 }
-
+                            */
                         }
 
-                        //console.log(total);
-                        row = '<tr><th class="text-left"></th><th class="text-left"></th><th class="text-left"></th><th class="text-center">'+total["MADERA"]+'</th><th class="text-center">'+total["PAPEL"]+'</th><th class="text-center">'+total["CARTON"]+'</th><th class="text-center">'+total["PLASTICO"]+'</th><th class="text-center">'+total["METAL"]+'</th><th class="text-center">'+total["TEXTIL"]+'</th><th class="text-center">'+total["VIDRIO"]+'</th><th class="text-center">'+total["NATURAL"]+'</th><th class="text-center">'+total["OTROS"]+'</th></tr>';
+                        // Totales
+                        row = '<tr><th class="text-left"></th><th class="text-left"></th><th class="text-left"></th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["MAD"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["PYC"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["PLA"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["MET"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["TEX"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["VID"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["NAT"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["OTR"])+'</th></tr>';
                         
                         $("#tableResultados").append(row); 
 
-                    $("#tableResultados").show();
-                    $("#butExportar").show();
+                        var desde = $("#desde_mes").val()+"/"+$("#desde_agno").val();
+                        var hasta = $("#hasta_mes").val()+"/"+$("#hasta_agno").val();
+                        drawChart(total, desde, hasta);
+
+                    $("#divTableResultados").show();
                     }
                 });
 
             }
         });
-        
-        $("#butExportar").click(function(){
-            $("#tableResultados").tableToCSV();
-        });
-        
 
         </script>
     </div>

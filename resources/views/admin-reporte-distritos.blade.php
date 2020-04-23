@@ -108,16 +108,15 @@
                 <tr>
                     <th class="text-left">Distrito</th>
                     <th class="text-center">Cantidad de Retiros</th>
-                    <th class="text-center">Total (gramos)</th>
-                    <th class="text-center">Madera (gramos)</th>
-                    <th class="text-center">Papel (gramos)</th>
-                    <th class="text-center">Cartón (gramos)</th>
-                    <th class="text-center">Plástico (gramos)</th>
-                    <th class="text-center">Metal (gramos)</th>
-                    <th class="text-center">Textil (gramos)</th>
-                    <th class="text-center">Vidrio (gramos)</th>
-                    <th class="text-center">Natural (gramos)</th>
-                    <th class="text-center">Otros (gramos)</th>
+                    <th class="text-center">Total (grs)</th>
+                    <th class="text-center">Madera (grs)</th>
+                    <th class="text-center">Papel y Cartón (grs)</th>
+                    <th class="text-center">Plástico (grs)</th>
+                    <th class="text-center">Metal (grs)</th>
+                    <th class="text-center">Textil (grs)</th>
+                    <th class="text-center">Vidrio (grs)</th>
+                    <th class="text-center">Natural (grs)</th>
+                    <th class="text-center">Otros (grs)</th>
                 </tr>
                 <tr id="tableRow1" class="selectable-row">
                     <td>1</td>
@@ -125,7 +124,6 @@
                     <td class="text-center" ><span id="sp_D1Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D1Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D1Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D1Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D1Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D1Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D1Textil" class="label spanValue label-default">0</span></td>
@@ -139,7 +137,6 @@
                     <td class="text-center" ><span id="sp_D2Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D2Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D2Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D2Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D2Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D2Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D2Textil" class="label spanValue label-default">0</span></td>
@@ -153,7 +150,6 @@
                     <td class="text-center" ><span id="sp_D3Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D3Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D3Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D3Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D3Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D3Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D3Textil" class="label spanValue label-default">0</span></td>
@@ -167,7 +163,6 @@
                     <td class="text-center" ><span id="sp_D4Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D4Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D4Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D4Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D4Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D4Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D4Textil" class="label spanValue label-default">0</span></td>
@@ -181,7 +176,6 @@
                     <td class="text-center" ><span id="sp_D5Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D5Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D5Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D5Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D5Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D5Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D5Textil" class="label spanValue label-default">0</span></td>
@@ -195,7 +189,6 @@
                     <td class="text-center" ><span id="sp_D6Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D6Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D6Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D6Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D6Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D6Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D6Textil" class="label spanValue label-default">0</span></td>
@@ -209,7 +202,6 @@
                     <td class="text-center" ><span id="sp_D7Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D7Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D7Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D7Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D7Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D7Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D7Textil" class="label spanValue label-default">0</span></td>
@@ -223,7 +215,6 @@
                     <td class="text-center" ><span id="sp_D8Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D8Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D8Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D8Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D8Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D8Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D8Textil" class="label spanValue label-default">0</span></td>
@@ -237,7 +228,6 @@
                     <td class="text-center" ><span id="sp_D9Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D9Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D9Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D9Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D9Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D9Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D9Textil" class="label spanValue label-default">0</span></td>
@@ -251,7 +241,6 @@
                     <td class="text-center" ><span id="sp_D10Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D10Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D10Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D10Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D10Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D10Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D10Textil" class="label spanValue label-default">0</span></td>
@@ -265,7 +254,6 @@
                     <td class="text-center" ><span id="sp_D11Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D11Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D11Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D11Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D11Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D11Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D11Textil" class="label spanValue label-default">0</span></td>
@@ -279,7 +267,6 @@
                     <td class="text-center" ><span id="sp_D12Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D12Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D12Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D12Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D12Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D12Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D12Textil" class="label spanValue label-default">0</span></td>
@@ -293,7 +280,6 @@
                     <td class="text-center" ><span id="sp_D13Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D13Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D13Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D13Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D13Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D13Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D13Textil" class="label spanValue label-default">0</span></td>
@@ -307,7 +293,6 @@
                     <td class="text-center" ><span id="sp_D14Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D14Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D14Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D14Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D14Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D14Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D14Textil" class="label spanValue label-default">0</span></td>
@@ -321,7 +306,6 @@
                     <td class="text-center" ><span id="sp_D15Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D15Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D15Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D15Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D15Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D15Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D15Textil" class="label spanValue label-default">0</span></td>
@@ -335,7 +319,6 @@
                     <td class="text-center" ><span id="sp_D16Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D16Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D16Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D16Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D16Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D16Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D16Textil" class="label spanValue label-default">0</span></td>
@@ -349,7 +332,6 @@
                     <td class="text-center" ><span id="sp_D17Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D17Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D17Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D17Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D17Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D17Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D17Textil" class="label spanValue label-default">0</span></td>
@@ -363,7 +345,6 @@
                     <td class="text-center" ><span id="sp_D18Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D18Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D18Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D18Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D18Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D18Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D18Textil" class="label spanValue label-default">0</span></td>
@@ -377,7 +358,6 @@
                     <td class="text-center" ><span id="sp_D19Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D19Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D19Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D19Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D19Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D19Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D19Textil" class="label spanValue label-default">0</span></td>
@@ -391,7 +371,6 @@
                     <td class="text-center" ><span id="sp_D20Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D20Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D20Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D20Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D20Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D20Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D20Textil" class="label spanValue label-default">0</span></td>
@@ -405,7 +384,6 @@
                     <td class="text-center" ><span id="sp_D21Total" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D21Madera" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D21Papel" class="label spanValue label-default">0</span></td>
-                    <td class="text-center"><span id="sp_D21Carton" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D21Plastico" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D21Metal" class="label spanValue label-default">0</span></td>
                     <td class="text-center"><span id="sp_D21Textil" class="label spanValue label-default">0</span></td>

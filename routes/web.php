@@ -72,13 +72,8 @@ Route::get('/admin/reportes/distritosTotales/{desde}/{hasta}', 'ReporteControlle
 Route::get('/admin/reportes/empresas_registradas/{desde?}/{hasta?}', 'ReporteController@reporteEmpresasRegistradas')->middleware('auth');
 Route::post('/admin/reportes/empresas_registradas/{desde?}/{hasta?}', 'ReporteController@getDataEmpresasRegistradas')->middleware('auth');
 
-/*
-Route::get('/admin/reportes/entregas_empresas/{desde?}/{hasta?}', 'ReporteController@reporteEntregasPorEmpresas')->middleware('auth');
-Route::post('/admin/reportes/entregas_empresas/{desde?}/{hasta?}', 'ReporteController@getDataEntregasPorEmpresas')->middleware('auth');
-*/
-Route::get('/admin/reportes/lugares_entrega/{desde?}/{hasta?}', 'ReporteController@reporteLugaresEntrega')->middleware('auth')->name('reporte-lugares-entrega');
-Route::post('/admin/reportes/lugares_entrega/{desde}/{hasta}', 'ReporteController@getDataLugaresEntrega')->middleware('auth');
-Route::get('/admin/reportes/lugares_entrega_totales/{desde}/{hasta}', 'ReporteController@getDataLugaresEntregaTotales')->middleware('auth')->name('reporte-lugar-entrega-totales');
+Route::get('/admin/reportes/retiros/{desde?}/{hasta?}', 'ReporteController@reporteRetiros')->middleware('auth')->name('reporte-retiros');
+Route::post('/admin/reportes/retiros/{desde}/{hasta}', 'ReporteController@getDataReporteRetiros')->middleware('auth');
 
 Route::get('/admin/reportes/stock_historico/{desde?}/{hasta?}', 'ReporteController@reporteStockHistorico')->middleware('auth')->name('reporte-stock-historico');
 Route::post('/admin/reportes/stock_historico/{desde?}/{hasta?}', 'ReporteController@getDataStockHistorico')->middleware('auth');

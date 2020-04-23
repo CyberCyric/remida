@@ -25,3 +25,6 @@ UPDATE material SET stock = (stock - 170010) WHERE nombre = 'VIDRIO';
 UPDATE material SET stock = (stock - 14620) WHERE nombre = 'NATURAL';
 
 SELECT SUM(madera) FROM retiros WHERE fecha >= '2018-01-01' AND fecha <= '2018-12-31';
+
+************************************ ENTREGAS ************************************************
+Carga a mano

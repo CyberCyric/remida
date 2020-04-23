@@ -16,12 +16,12 @@
         <li class="dropdown" id="menulink-admin-reportes">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="{{ url('/admin/reportes/stock') }}">Stock de Material</a></li>
-            <li><a href="{{ url('/admin/reportes/stock_historico') }}">Stock historico</a></li>
+            <li><a href="{{ url('/admin/reportes/stock') }}">Stock (actual)</a></li>
+            <li><a href="{{ url('/admin/reportes/stock_historico') }}">Stock (histórico)</a></li>
             <li><a href="{{ url('/admin/reportes/entregas') }}">Entregas</a></li>
+            <li><a href="{{ url('/admin/reportes/retiros') }}">Retiros</a></li>
             <li><a href="{{ url('/admin/reportes/empresas_registradas') }}">Empresas Registradas</a></li>
-            <li><a href="{{ url('/admin/reportes/distritos') }}">Distritos Educativos</a></li>
-            <li><a href="{{ url('/admin/reportes/lugares_entrega') }}">Lugares de Retiro</a></li>
+            <li><a href="{{ url('/admin/reportes/distritos') }}">Distritos Educativos</a></li>            
           </ul>
         </li>
         <li id="menulink-admin-entregas"><a href="{{ url('/admin/entregas') }}">Entregas</a></li>
