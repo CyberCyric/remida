@@ -37,7 +37,7 @@
   </div>
 
   <div class="form-group row" id="field_group_1">
-    <label for="input1" class="col-sm-4 col-form-label">Role:</label>
+    <label for="input1" class="col-sm-4 col-form-label">Rol:</label>
     <div class="col-sm-8">
       <select id="cmbRole" name="role" class="form-control " data-toggle="tooltip" title="" 
       @if($isAdmin == false)

@@ -30,7 +30,7 @@ class RetiroController extends Controller
 
     public function listPendientes(){
         $retiros = DB::table('retiros')
-        ->join('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
+        ->leftJoin('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
         ->where('aprobado','N')
         ->orderBy('fecha', 'desc')
         ->orderBy('retiro_id', 'desc')
@@ -41,7 +41,7 @@ class RetiroController extends Controller
 
     public function listAprobados(){
         $retiros = DB::table('retiros')
-        ->join('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
+        ->leftJoin('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
         ->where('aprobado','S')
         ->orderBy('fecha', 'desc')
         ->orderBy('retiro_id', 'desc')
@@ -127,7 +127,7 @@ class RetiroController extends Controller
 
         $data = request();
         $retiro = Retiro::create([
-            'fecha' => date("Y-m-d"),
+            'fecha' => $data["agno"]."-".$data["mes"]."-".$data["dia"],
             'nombre' => $data['nombre'],
             'institucion' => $data['institucion'],
             'distrito_id' => $data['distrito_id'],
@@ -188,6 +188,7 @@ class RetiroController extends Controller
 
     public function displayForm(){
         $distritos = DB::table('distrito')
+        ->orderBy('nombre')
         ->get();        
         return view('retiro', compact('distritos'));
     }

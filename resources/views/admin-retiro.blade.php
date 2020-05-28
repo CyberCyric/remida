@@ -35,6 +35,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="evento" class="col-sm-2 col-form-label">Evento:</label>
+                    <div class="col-sm-10">
+                        {{ $retiro->evento }}
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="distrito_id" class="col-sm-2 col-form-label">Distrito:</label>
                     <div class="col-sm-10">
                         {{ $retiro->nombreDistrito }}
@@ -273,6 +279,7 @@
 
     $("#butVolver").click(function() {
         window.location.href = "../retiros_pendientes";
+        return false;
     });
 
     function checkStock(){

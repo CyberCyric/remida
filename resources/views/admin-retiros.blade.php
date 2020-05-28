@@ -28,6 +28,7 @@
           <th>Escuela / Institución</th>
           <th>Distrito</th>
           <th>Nombre y Apellido</th>
+          <th>Evento</th>
           <th>Estado</th>
         </tr>
         @foreach ($retiros as $retiro)
@@ -37,6 +38,7 @@
             <td>{{ $retiro->institucion }}</td>
             <td>{{ $retiro->distrito }}</td>
             <td>{{ $retiro->nombre }}</td>
+            <td>{{ $retiro->evento }}</td>
             <td>
               @if ($retiro->aprobado == 'S')
               <span class="label label-success icono_retiro_aprobado" >

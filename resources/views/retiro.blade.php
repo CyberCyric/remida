@@ -76,7 +76,6 @@
                   <label for="distrito_id" class="col-sm-2 col-form-label">Distrito:</label>
                   <div class="col-sm-10">
                      <select class="form-control" name="distrito_id" id="cmbDistrito">
-                        <option value="0">Seleccionar...</option>
                         @foreach ($distritos as $distrito)
                         <option value="{{ $distrito->distrito_id }}">{{ $distrito->nombre }}</option>
                         @endforeach
@@ -91,8 +90,10 @@
                </div>
                <div class="form-group row">
                   <label for="fecha" class="col-sm-2 col-form-label">Fecha (dd/mm/aaaa):</label>
-                  <div class="col-sm-10">{{ date('d-M-Y') }}
-                     <input type="hidden" class="form-control" name="fecha" id="input_fecha" placeholder="" value="{{ date('Y-m-d') }}">
+                  <div class="col-sm-10">
+                     <input type="text" name="dia" size="2" id="inputDia" value="{{ date('d') }}" />
+            <input type="text" name="mes" size="2" id="inputMes" value="{{ date('m') }}" />
+            <input type="text" name="agno" size="4" id="inputAgno" value="{{ date('Y') }}" />
                   </div>
                </div>
                <hr/>
@@ -217,8 +218,8 @@
         $("#butSolicitarMaterial").click(function(){
           var error = false;
           var msg = '';
-          if ( $("#input_nombre").val() == '') { error = true; msg += " - Ingresa tu nombre y apellido.\n"; }
-          if ( $("#input_institucion").val() == '') { error = true; msg += " - Ingresa la institución educativa.\n"; }
+          // if ( $("#input_nombre").val() == '') { error = true; msg += " - Ingresa tu nombre y apellido.\n"; }
+          // if ( $("#input_institucion").val() == '') { error = true; msg += " - Ingresa la institución educativa.\n"; }
           if ( ($("#inputMadera").val() == 0) &&  ($("#inputPapel").val() == 0) && ($("#inputCarton").val() == 0) && ($("#inputPlastico").val() == 0) && ($("#inputMetal").val() == 0) && ($("#inputTextil").val() == 0) && ($("#inputVidrio").val() == 0) && ($("#inputNatural").val() == 0) && ($("#inputOtros").val() == 0)){
               error = true;
               msg += " - Ingresá al menos un material.\n";
