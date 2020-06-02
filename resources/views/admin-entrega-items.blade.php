@@ -33,6 +33,7 @@
         </div>
         <table class="table">
             <tr class="table-header">
+                <th>ID</th>
                 <th>Empresa</th>
                 <th>Material</th>
                 <th>Cantidad (en KGs)</th>
@@ -41,6 +42,7 @@
             </tr>
             @foreach ($items as $item)
             <tr class="selectable">
+                <td>{{$item->item_id}}</td>
                 <td>{{$item->razon_social}}</td>
                 <td>{{$item->material}}</td>
                 <td>{{$item->cantidad}}</td>
