@@ -10,13 +10,22 @@ use JavaScript;
 class ReporteController extends Controller
 {
     public function reporteStock(){  	
-    	$entregas = DB::table('entrega')->count();
-    	$retiros = DB::table('retiros')
+    	$cantidadEntregas = DB::table('entrega')->count();
+        
+        $cantidadRetiros = DB::table('retiros')
     		->where('retiros.aprobado','S')
     		->count();
-    	$empresas = DB::table('empresa')->count();
-    	$materiales = DB::table('stock')->select('nombre', 'stock')->get();
-        return view('admin-reporte-stock', compact('entregas', 'retiros', 'empresas', 'materiales'));
+        
+        $cantidadEmpresas = DB::table('empresa')->count();  
+        $materiales = DB::table('stock')->selectRaw('nombre, stock / 1000 AS stock')->get();
+        
+        $entregas = DB::table('entrega_item')
+        ->join('stock', 'stock.material_id', '=', 'entrega_item.material_id')
+        ->selectRaw('SUM(entrega_item.cantidad), stock.codigo')
+        ->groupBy('stock.codigo')
+        ->get();
+        
+        return view('admin-reporte-stock', compact('cantidadEntregas', 'cantidadRetiros', 'cantidadEmpresas', 'materiales'));
 	}
 
     public function reporteEmpresasRegistradas($desde = '', $hasta = ''){
@@ -30,7 +39,7 @@ class ReporteController extends Controller
         $empresas = DB::table('empresa')
         ->where('empresa.fecha_ingreso', '>=', $desde)
         ->where('empresa.fecha_ingreso', '<=', $hasta)
-        ->selectRaw('empresa.razon_social, DATE_FORMAT(fecha_ingreso, "%d/%m/%Y") AS fecha_ingreso, CONCAT(
+        ->selectRaw('empresa.razon_social, DATE_FORMAT(fecha_ingreso, "%d/%m/%Y") AS fecha_ingreso, empresa.tipo, CONCAT(
                 IF(empresa.entrega_madera = "S", "MADERA, ", ""), 
                 IF(empresa.entrega_papel = "S", "PAPEL, ", ""), 
                 IF(empresa.entrega_plastico = "S", "PLASTICO, ", ""), 
@@ -171,21 +180,21 @@ class ReporteController extends Controller
         ->join('stock', 'entrega_item.material_id', '=', 'stock.material_id')
         ->where('entrega.fecha', '>=', $desde)
         ->where('entrega.fecha', '<=', $hasta)
-        ->selectRaw('entrega.entrega_id, DATE_FORMAT(entrega.fecha,"%d/%m/%Y") AS fecha, empresa.razon_social, entrega_item.*, stock.codigo')
+        ->selectRaw('entrega.orden, DATE_FORMAT(entrega.fecha,"%d/%m/%Y") AS fecha, empresa.razon_social, empresa.tipo, entrega_item.*, stock.codigo')
         ->get();
 
         $json = json_encode($entregas);
         return  $json;
     }
-
+    
     public function reporteStockHistorico($desde = '', $hasta = ''){
 
         if ($desde == '') {$desde = date('Y')."-".date('m')."-01";}
         if ($hasta == '') {$hasta = date('Y')."-".date('m')."-31";}
 
         $historico = DB::table('stock_historico')
-        ->selectRaw('DATE_FORMAT(fecha, "%d/%m/%Y") AS fecha, madera, papel, plastico, metal, textil, vidrio, naturales, otros')
-        ->orderBy('fecha','DESC')
+        ->selectRaw('DATE_FORMAT(fecha, "%d/%m/%Y") AS fecha, madera / 100 AS madera, papel / 100 AS papel, plastico / 100 AS plastico, metal / 100 AS metal, textil / 100 AS textil, vidrio / 100 AS vidrio, naturales / 100 AS naturales, otros / 100 AS otros')
+        ->orderBy('stock_historico.fecha','DESC')
         ->limit(6)
         ->get();
 

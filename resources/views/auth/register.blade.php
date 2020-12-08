@@ -49,7 +49,7 @@
       </div>
         
       <div>
-        <img src="{{ asset('img/remida.jpg') }}" class="remida-logo" style="float:right;height: 60px; width: auto"/>
+        <img src="{{ asset('images/remida.jpg') }}" class="remida-logo" style="float:right;height: 60px; width: auto"/>
       </div>
 
   </div>

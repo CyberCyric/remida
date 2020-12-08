@@ -18,6 +18,41 @@
     @include('admin-navbar')
       <div class="row">
            <div class="col-md-6 titulo">Retiros de material</div>
+           <div class="col-md-6 text-right"><button class="btn" onclick="javascript:exportCSV('{{ $aprobado }}');">Exportar</button></div>
+      </div>
+
+       <!-- Modal -->
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="divModalDescargaAprobados">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Archivo generado</h4>
+          </div>
+          <div class="modal-body text-center">
+            <div id="divLinkDescargaReporte">
+              <h4><a class="badge badge-secondary"  href="{{ asset('/reportes/reporteRetirosAprobados.csv') }}" download="reporteRetirosAprobados.csv">Descargar</a></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="divModalDescargaPendientes">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Archivo generado</h4>
+          </div>
+          <div class="modal-body text-center">
+            <div id="divLinkDescargaReporte">
+              <h4><a class="badge badge-secondary" href="{{ asset('/reportes/reporteRetirosPendientes.csv') }}" download="reporteRetirosPendientes.csv">Descargar</a></h4>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
       
 
@@ -25,20 +60,24 @@
         <tr class="table-header">
           <th>Número</th>
           <th>Fecha</th>
+          <th>Lugar</th>
           <th>Escuela / Institución</th>
           <th>Distrito</th>
           <th>Nombre y Apellido</th>
           <th>Evento</th>
+          <th>Proyecto Inst.</th>
           <th>Estado</th>
         </tr>
         @foreach ($retiros as $retiro)
           <tr class="selectable" id="row-{{ $retiro->retiro_id }}">
-            <td>{{ $retiro->retiro_id }}</td>
+            <td>{{ $retiro->orden }}</td>
             <td>{{ \Carbon\Carbon::parse($retiro->fecha)->format('d/m/Y')}}</td>
+            <td>{{ $retiro->lugar_retiro }}</td>
             <td>{{ $retiro->institucion }}</td>
             <td>{{ $retiro->distrito }}</td>
             <td>{{ $retiro->nombre }}</td>
             <td>{{ $retiro->evento }}</td>
+            <td>{{ $retiro->proyecto_institucional }}</td>
             <td>
               @if ($retiro->aprobado == 'S')
               <span class="label label-success icono_retiro_aprobado" >
@@ -79,6 +118,23 @@
         var rowID = this.id
           window.location.href= "retiro/" + rowID.substring(rowID.indexOf("-")+1, rowID.length);
       });
+
+      function exportCSV(aprobado) {
+          if (aprobado == 'S')
+            var url = '{{ url("/admin/retiros_aprobados/exportToJson") }}';
+          else
+            var url = '{{ url("/admin/retiros_pendientes/exportToJson") }}';
+
+          $.ajax({
+            url:url,  
+            success:function(data) {
+              if (aprobado == 'S')
+                $("#divModalDescargaAprobados").modal('show');
+              if (aprobado == 'N')
+                $("#divModalDescargaPendientes").modal('show');
+            }
+          });
+        }
 
     </script>
 

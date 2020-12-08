@@ -20,26 +20,28 @@
             <div class="col-md-6 text-right"><button class="btn btn-primary" id="butNuevaEntrega" type="submit">Nueva Entrega</button></div>
         </div>
         <div>
-            <h5>Elegir año: 
+            <h5>Elegir año:
                 @foreach ($agnos as $agno)
-                    <a href="{{ url('/admin/entregas/'.$agno->agno) }}">{{ $agno->agno }}</a> |
+                <a href="{{ url('/admin/entregas/'.$agno->agno) }}" class="link">{{ $agno->agno }}</a> |
                 @endforeach
             </h5>
         </div>
         <table class="table">
             <tr class="table-header">
-                <th style="width: 20%"><h4>{{$agno_seleccionado}}</h4></th>
+                <th style="width: 20%">
+                    <h4>{{$agno_seleccionado}}</h4>
+                </th>
                 <th></th>
                 <th></th>
             </tr>
             @foreach ($entregas as $entrega)
             <tr class="selectable" id="row-{{ $entrega->entrega_id }}" onClick="javascript:verItems({{ $entrega->entrega_id }})">
-                <td>{{ mes_castellano(\Carbon\Carbon::parse($entrega->fecha)->format('m')) }} 
+                <td>{{ mes_castellano(\Carbon\Carbon::parse($entrega->fecha)->format('m')) }}
                     {{ \Carbon\Carbon::parse($entrega->fecha)->format('d, Y')}}</td>
-                <td>Entrega Nro. {{ $entrega->entrega_id }}</td>
-                <td><!--
-                <button class="btn btn-sm btn-danger" onClick="javascript:eliminar({{ $entrega->entrega_id}});">Eliminar</button>
-                --></td>
+                <td>Entrega Nro.{{ $entrega->orden }}</td>
+                <td>
+                    
+                </td>
             </tr>
             @endforeach
         </table>
@@ -64,22 +66,6 @@
     function verItems(id) {
         var url = "{{ url('/admin/entrega_items/') }}" + "/" + id;
         window.location.href = url;
-    }
-
-    function eliminar(entrega_id){
-        var rdo = confirm("¿Eliminar esta entrega y todo su contenido?");
-        if (rdo){
-            console.log("MANDO");
-            $.ajax({
-                url: "{{ url('/admin/entrega/') }}"+ entrega_id,
-                type: 'DELETE',
-                data : {"_token":"{{ csrf_token() }}"},  //pass the CSRF_TOKEN()
-                success: function(result) {
-                    var url = "{{ url('/admin/entregas/') }}";
-                    window.location.href = url;
-                }
-            });
-        }
     }
 
     </script>

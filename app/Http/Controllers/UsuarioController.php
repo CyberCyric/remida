@@ -35,6 +35,7 @@ class UsuarioController extends Controller
         $usuario = User::find($id);        
         $usuario->role = $data['role'];        
         $usuario->active = $data['active'];
+        $usuario->password = bcrypt($data['clave']);
         $usuario->save();
         return redirect()->route('usuarios');
 	}

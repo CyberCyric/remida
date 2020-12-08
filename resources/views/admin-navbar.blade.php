@@ -40,10 +40,12 @@
           <ul class="dropdown-menu">
             <li id="menulink-admin-empresas"><a href="{{ url('/admin/empresas') }}">Empresas</a></li>
             <li id="menulink-admin-usuarios"><a href="{{ url('/admin/usuarios') }}">Usuarios</a></li>     
-            <li role="separator" class="divider"></li>     
+            <li role="separator" class="divider"></li>    
+            <!-- 
             <li id="menulink-admin-">
               <a href="{{ url('/scripts/saveStock.php') }}" target="_blank">(*) Guardar Stock actual</a>
             </li>
+            -->
             <!--  
             <li id="menulink-admin-">
               <a href="{{ url('/scripts/resetDatabase.php') }}">(*) Resetear Base de Datos</a>

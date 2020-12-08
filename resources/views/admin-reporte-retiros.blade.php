@@ -69,12 +69,31 @@
         <div>
             <hr />
         </div>
+        <!-- Modal -->
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="divModalDescarga">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Archivo generado</h4>
+          </div>
+          <div class="modal-body text-center">
+            <div id="divLinkDescargaReporte">
+              <h4><a class="badge badge-secondary" href="{{ asset('/reportes/reporteRetirosPendientes.csv') }}" download="reporteRetirosPendientes.csv">Descargar</a></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
         <canvas id="myChart" width="400" height="400">Chart</canvas>
         <div>
             <hr />
         </div>
-        <div class="row well">
-            <table class="table table-stripped" id="tableResultados" style="display:none">
+        
+        <div class="row well" style="display:none" id="divTableResultados">
+            <div class="text-right"><button class="btn" onclick="javascript:exportCSV();">Exportar</button></div>
+            <table class="table table-stripped" id="tableResultados" >
+                <tr><td colspan="10" class="text-center" id="tdTituloTabla"><h3></h3></td><tr>
                 <tr>
                     <th class="text-left"><span id="sp_LABEL_LUGARES"></span></th>
                     <th class="text-center"><span id="sp_LABEL_TOTAL_GRAMOS"></span></th>
@@ -177,6 +196,11 @@
 
         function drawTable(data){
             var obj = JSON.parse(data);
+            var desde = $("#desde_mes").val()+"/"+$("#desde_agno").val();
+            var hasta = $("#hasta_mes").val()+"/"+$("#hasta_agno").val();
+
+            $("#tdTituloTabla").html("<h3>Retiros entre "+desde+" y "+hasta+"</h3>");
+            
             // LABELS
             $("#sp_LABEL_LUGARES").html();
             $("#sp_LABEL_TOTAL_GRAMOS").html("Total en grms");
@@ -191,66 +215,66 @@
 
             // CENTRO
             centro = obj.DATA.CENTRO[0];
-            $("#sp_CENTRO_MAD").html(new Intl.NumberFormat("es-ES").format(centro.MAD));
-            $("#sp_CENTRO_PYC").html(new Intl.NumberFormat("es-ES").format(centro.PYC));
-            $("#sp_CENTRO_PLA").html(new Intl.NumberFormat("es-ES").format(centro.PLA));
-            $("#sp_CENTRO_MET").html(new Intl.NumberFormat("es-ES").format(centro.MET));
-            $("#sp_CENTRO_TEX").html(new Intl.NumberFormat("es-ES").format(centro.TEX));
-            $("#sp_CENTRO_VID").html(new Intl.NumberFormat("es-ES").format(centro.VID));
-            $("#sp_CENTRO_NAT").html(new Intl.NumberFormat("es-ES").format(centro.NAT));
-            $("#sp_CENTRO_OTR").html(new Intl.NumberFormat("es-ES").format(centro.OTR));
+            $("#sp_CENTRO_MAD").html(new Intl.NumberFormat("de-DE").format(centro.MAD));
+            $("#sp_CENTRO_PYC").html(new Intl.NumberFormat("de-DE").format(centro.PYC));
+            $("#sp_CENTRO_PLA").html(new Intl.NumberFormat("de-DE").format(centro.PLA));
+            $("#sp_CENTRO_MET").html(new Intl.NumberFormat("de-DE").format(centro.MET));
+            $("#sp_CENTRO_TEX").html(new Intl.NumberFormat("de-DE").format(centro.TEX));
+            $("#sp_CENTRO_VID").html(new Intl.NumberFormat("de-DE").format(centro.VID));
+            $("#sp_CENTRO_NAT").html(new Intl.NumberFormat("de-DE").format(centro.NAT));
+            $("#sp_CENTRO_OTR").html(new Intl.NumberFormat("de-DE").format(centro.OTR));
 
             // VIAJERO
             viajero = obj.DATA.VIAJERO[0];
-            $("#sp_VIAJERO_MAD").html(new Intl.NumberFormat("es-ES").format(viajero.MAD));
-            $("#sp_VIAJERO_PYC").html(new Intl.NumberFormat("es-ES").format(viajero.PYC));
-            $("#sp_VIAJERO_PLA").html(new Intl.NumberFormat("es-ES").format(viajero.PLA));
-            $("#sp_VIAJERO_MET").html(new Intl.NumberFormat("es-ES").format(viajero.MET));
-            $("#sp_VIAJERO_TEX").html(new Intl.NumberFormat("es-ES").format(viajero.TEX));
-            $("#sp_VIAJERO_VID").html(new Intl.NumberFormat("es-ES").format(viajero.VID));
-            $("#sp_VIAJERO_NAT").html(new Intl.NumberFormat("es-ES").format(viajero.NAT));
-            $("#sp_VIAJERO_OTR").html(new Intl.NumberFormat("es-ES").format(viajero.OTR));            
+            $("#sp_VIAJERO_MAD").html(new Intl.NumberFormat("de-DE").format(viajero.MAD));
+            $("#sp_VIAJERO_PYC").html(new Intl.NumberFormat("de-DE").format(viajero.PYC));
+            $("#sp_VIAJERO_PLA").html(new Intl.NumberFormat("de-DE").format(viajero.PLA));
+            $("#sp_VIAJERO_MET").html(new Intl.NumberFormat("de-DE").format(viajero.MET));
+            $("#sp_VIAJERO_TEX").html(new Intl.NumberFormat("de-DE").format(viajero.TEX));
+            $("#sp_VIAJERO_VID").html(new Intl.NumberFormat("de-DE").format(viajero.VID));
+            $("#sp_VIAJERO_NAT").html(new Intl.NumberFormat("de-DE").format(viajero.NAT));
+            $("#sp_VIAJERO_OTR").html(new Intl.NumberFormat("de-DE").format(viajero.OTR));            
             // EVENTOS
             eventos = obj.DATA.EVENTOS[0];
-            $("#sp_EVENTOS_MAD").html(new Intl.NumberFormat("es-ES").format(eventos.MAD));
-            $("#sp_EVENTOS_PYC").html(new Intl.NumberFormat("es-ES").format(eventos.PYC));
-            $("#sp_EVENTOS_PLA").html(new Intl.NumberFormat("es-ES").format(eventos.PLA));
-            $("#sp_EVENTOS_MET").html(new Intl.NumberFormat("es-ES").format(eventos.MET));
-            $("#sp_EVENTOS_TEX").html(new Intl.NumberFormat("es-ES").format(eventos.TEX));
-            $("#sp_EVENTOS_VID").html(new Intl.NumberFormat("es-ES").format(eventos.VID));
-            $("#sp_EVENTOS_NAT").html(new Intl.NumberFormat("es-ES").format(eventos.NAT));
-            $("#sp_EVENTOS_OTR").html(new Intl.NumberFormat("es-ES").format(eventos.OTR));    
+            $("#sp_EVENTOS_MAD").html(new Intl.NumberFormat("de-DE").format(eventos.MAD));
+            $("#sp_EVENTOS_PYC").html(new Intl.NumberFormat("de-DE").format(eventos.PYC));
+            $("#sp_EVENTOS_PLA").html(new Intl.NumberFormat("de-DE").format(eventos.PLA));
+            $("#sp_EVENTOS_MET").html(new Intl.NumberFormat("de-DE").format(eventos.MET));
+            $("#sp_EVENTOS_TEX").html(new Intl.NumberFormat("de-DE").format(eventos.TEX));
+            $("#sp_EVENTOS_VID").html(new Intl.NumberFormat("de-DE").format(eventos.VID));
+            $("#sp_EVENTOS_NAT").html(new Intl.NumberFormat("de-DE").format(eventos.NAT));
+            $("#sp_EVENTOS_OTR").html(new Intl.NumberFormat("de-DE").format(eventos.OTR));    
 
             // TOTALES por LUGAR
             total_gramos_centro = centro.MAD + centro.PYC + centro.PLA + centro.MET + centro.TEX + centro.VID + centro.NAT + centro.OTR;
-            $("#sp_CENTRO_TOTAL").html(new Intl.NumberFormat("es-ES").format(total_gramos_centro ));
+            $("#sp_CENTRO_TOTAL").html(new Intl.NumberFormat("de-DE").format(total_gramos_centro ));
             total_gramos_viajero = viajero.MAD + viajero.PYC + viajero.PLA + viajero.MET + viajero.TEX + viajero.VID + viajero.NAT + viajero.OTR;
-            $("#sp_VIAJERO_TOTAL").html(new Intl.NumberFormat("es-ES").format(total_gramos_viajero ));
+            $("#sp_VIAJERO_TOTAL").html(new Intl.NumberFormat("de-DE").format(total_gramos_viajero ));
             total_gramos_eventos = eventos.MAD + eventos.PYC + eventos.PLA + eventos.MET + eventos.TEX + eventos.VID + eventos.NAT + eventos.OTR;
-            $("#sp_EVENTOS_TOTAL").html(new Intl.NumberFormat("es-ES").format(total_gramos_eventos ));
+            $("#sp_EVENTOS_TOTAL").html(new Intl.NumberFormat("de-DE").format(total_gramos_eventos ));
 
             // TOTALES por MATERIAL
             total_MAD = centro.MAD + viajero.MAD + eventos.MAD;
-            $("#sp_TOTAL_MAD").html(new Intl.NumberFormat("es-ES").format(total_MAD));
+            $("#sp_TOTAL_MAD").html(new Intl.NumberFormat("de-DE").format(total_MAD));
             total_PYC = centro.PYC + viajero.PYC + eventos.PYC;
-            $("#sp_TOTAL_PYC").html(new Intl.NumberFormat("es-ES").format(total_PYC));
+            $("#sp_TOTAL_PYC").html(new Intl.NumberFormat("de-DE").format(total_PYC));
             total_PLA = centro.PLA + viajero.PLA + eventos.PLA;
-            $("#sp_TOTAL_PLA").html(new Intl.NumberFormat("es-ES").format(total_PLA));
+            $("#sp_TOTAL_PLA").html(new Intl.NumberFormat("de-DE").format(total_PLA));
             total_MET = centro.MET + viajero.MET + eventos.MET;
-            $("#sp_TOTAL_MET").html(new Intl.NumberFormat("es-ES").format(total_MET));
+            $("#sp_TOTAL_MET").html(new Intl.NumberFormat("de-DE").format(total_MET));
             total_TEX = centro.TEX + viajero.TEX + eventos.TEX;
-            $("#sp_TOTAL_TEX").html(new Intl.NumberFormat("es-ES").format(total_TEX));
+            $("#sp_TOTAL_TEX").html(new Intl.NumberFormat("de-DE").format(total_TEX));
             total_VID = centro.VID + viajero.VID + eventos.VID;
-            $("#sp_TOTAL_VID").html(new Intl.NumberFormat("es-ES").format(total_VID));
+            $("#sp_TOTAL_VID").html(new Intl.NumberFormat("de-DE").format(total_VID));
             total_NAT = centro.NAT + viajero.NAT + eventos.NAT;
-            $("#sp_TOTAL_NAT").html(new Intl.NumberFormat("es-ES").format(total_NAT));
+            $("#sp_TOTAL_NAT").html(new Intl.NumberFormat("de-DE").format(total_NAT));
             total_OTR = centro.OTR + viajero.OTR + eventos.OTR;
-            $("#sp_TOTAL_OTR").html(new Intl.NumberFormat("es-ES").format(total_OTR));
+            $("#sp_TOTAL_OTR").html(new Intl.NumberFormat("de-DE").format(total_OTR));
 
             total = total_gramos_centro + total_gramos_viajero + total_gramos_eventos;
-            $("#sp_TOTAL").html(new Intl.NumberFormat("es-ES").format(total));
+            $("#sp_TOTAL").html(new Intl.NumberFormat("de-DE").format(total));
 
-            $("#tableResultados").show();
+            $("#divTableResultados").show();
         }
 
 
@@ -299,6 +323,20 @@
             });
         }
 
+        function exportCSV() {
+            var csv = '';
+            $("#tableResultados tr").each(function () {
+              $(this).find('td').each(function(){
+                csv += $(this).text() + ";"; 
+              });
+              csv += "\n";
+            });
+
+            var link = '<h4><a class="badge badge-secondary" href="data:application/csv;charset=utf-8,'+encodeURIComponent(csv)+'" download="reporteRetiros.csv">Descargar</a></h4>';
+
+            $("#divLinkDescargaReporte").html(link);
+            $("#divModalDescarga").modal('show');
+        }
         </script>
     </div>
 </body>

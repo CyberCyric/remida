@@ -28,21 +28,21 @@
         <div class="alert-spot alert-spot-success col-md-4 dashboard-boxes">
         <span class="glyphicon glyphicon-log-in"></span>
         <div class="alert-link-text">
-          <h4>Entregas: {{ $entregas }}</h4>
+          <h4>Entregas: {{ $cantidadEntregas }}</h4>
           <p class="dashboard-copete">Cantidad de entregas recibidas.</p>
         </div>
         </div>
         <div class="alert-spot alert-spot-info col-md-4 dashboard-boxes">
         <span class="glyphicon glyphicon glyphicon-log-out"></span>
         <div class="alert-link-text">
-          <h4>Retiros: {{ $retiros }}</h4>
+          <h4>Retiros: {{ $cantidadRetiros }}</h4>
           <p class="dashboard-copete">Cantidad de retiros aprobados.</p>
         </div>
         </div> 
         <div class="alert-spot alert-spot-warning col-md-4 dashboard-boxes">
         <span class="glyphicon glyphicon-briefcase"></span>
         <div class="alert-link-text">
-          <h4>Empresas: {{ $empresas }}</h4>
+          <h4>Empresas: {{ $cantidadEmpresas }}</h4>
           <p class="dashboard-copete">Cantidad de empresas registradas en el sistema.</p>
         </div>
         </div>
@@ -103,7 +103,7 @@
                 options: {
                   title: {
                     display: true,
-                    text: "Stock actual de Material (en Gramos) - "+today,
+                    text: "Stock actual de Material (en Kilogramos) - "+today,
                     fontSize: 20,
                   },
                   legend: {
@@ -133,6 +133,7 @@
      });
         </script>
   </div>
+
 </div>
 
 

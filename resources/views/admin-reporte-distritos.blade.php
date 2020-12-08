@@ -21,6 +21,21 @@
 </head>
 
 <body>
+    <!-- Modal -->
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="divModalDescarga">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Archivo generado</h4>
+          </div>
+          <div class="modal-body text-center">
+            <div id="divLinkDescargaReporte"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+
     <div class="container">
         @include('admin-navbar')
         <div class="row">
@@ -69,9 +84,10 @@
         <div>
             <hr />
         </div>
-        <div class="row well noline">
+        <div class="row well noline" id="divTableResultados" style="display:none">
+            <div class="text-right"><button class="btn" onclick="javascript:exportCSV();">Exportar</button></div>
             <div class="col-md-6">
-                <div id="divMapa" class="mapaDistrito0" style="display:none">
+                <div id="divMapa" class="mapaDistrito0" >
                     <img src="{{ asset('images/pix.png') }}" style="width: 550px; height: 550px" usemap="#mapaDistritos"/>
                     <map name="mapaDistritos">
   <area shape="poly" coords="374,125,464,180,450,195,466,241,362,254,360,214,364,197,335,173,374,124" href="javascript:mostrarMapa(1);" alt="DE1">
@@ -104,19 +120,20 @@
                 </div>
             </div>
             <div class="col-md-6">
-            <table class="table table-stripped" id="tableResultados" style="display:none">
+            <table class="table table-stripped" id="tableResultados">
+                <tr><td colspan="11" class="text-center" id="tdTituloTabla"></td></tr>
                 <tr>
-                    <th class="text-left">Distrito</th>
-                    <th class="text-center">Cantidad de Retiros</th>
-                    <th class="text-center">Total (grs)</th>
-                    <th class="text-center">Madera (grs)</th>
-                    <th class="text-center">Papel y Cartón (grs)</th>
-                    <th class="text-center">Plástico (grs)</th>
-                    <th class="text-center">Metal (grs)</th>
-                    <th class="text-center">Textil (grs)</th>
-                    <th class="text-center">Vidrio (grs)</th>
-                    <th class="text-center">Natural (grs)</th>
-                    <th class="text-center">Otros (grs)</th>
+                    <td class="text-left">Distrito</td>
+                    <td class="text-center">Cantidad de Retiros</td>
+                    <td class="text-center">Total (grs)</td>
+                    <td class="text-center">Madera (grs)</td>
+                    <td class="text-center">Papel y Cartón (grs)</td>
+                    <td class="text-center">Plastico (grs)</td>
+                    <td class="text-center">Metal (grs)</td>
+                    <td class="text-center">Textil (grs)</td>
+                    <td class="text-center">Vidrio (grs)</td>
+                    <td class="text-center">Natural (grs)</td>
+                    <td class="text-center">Otros (grs)</td>
                 </tr>
                 <tr id="tableRow1" class="selectable-row">
                     <td>1</td>
@@ -408,6 +425,22 @@
                 $("#divMapa").addClass('mapaDistrito'+i);
                 $("#tableRow"+i).addClass('selected-row');
             }
+        }
+
+        function exportCSV() {
+            var csv = '';
+
+            $("#tableResultados tr").each(function () {
+              $(this).find('td').each(function(){
+                csv += $(this).text() + ";"; 
+              });
+              csv += "\n";
+            });
+
+            var link = '<h4><a class="badge badge-secondary" href="data:application/csv;charset=utf-8,'+encodeURIComponent(csv)+'" download="reporteDistritos.csv">Descargar</a></h4>';
+
+            $("#divLinkDescargaReporte").html(link);
+            $("#divModalDescarga").modal('show');
 
         }
 
@@ -443,8 +476,10 @@
                     },
                     success: function(data) {
                         var obj = jQuery.parseJSON(data);
-
-                        $("#tableResultados").show();
+                        var desde = $("#desde_mes").val()+"/"+$("#desde_agno").val();
+                        var hasta = $("#hasta_mes").val()+"/"+$("#hasta_agno").val();                        
+                        $("#divTableResultados").show();
+                        $("#tdTituloTabla").html("<h3>Retiros por Distrito Educativo entre "+desde+" y "+hasta+"</h3>");
                         $(".spanValue").html("0");
                         $(".spanValue").removeClass("label-primary");
                         $(".spanValue").addClass("label-default");
@@ -510,8 +545,7 @@
                                 for (index = 0; index < obj.length; ++index) {
                                     $("#sp_D"+obj[index]["distrito_id"]+"TotalRetiros").html(obj[index]["total"]);                                
                                     }
-                                    $("#tableResultados").show();
-                                    $("#divMapa").show();
+                                    $("#divTableResultados").show();
                                     }
                             });
                     }

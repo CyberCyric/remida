@@ -16,7 +16,7 @@
     <div class="container">
         @include('admin-navbar')
         <div class="row">
-            <div class="col-md-6 titulo">Contenido de la Entrega #{{$entrega_id}} ({{ \Carbon\Carbon::parse($entrega->fecha)->format('d/m/Y')}})</div>
+            <div class="col-md-6 titulo">Contenido de la Entrega Nro. {{$entrega->orden}} ({{ \Carbon\Carbon::parse($entrega->fecha)->format('d/m/Y')}})</div>
 
             <div class="col-md-6 text-right">
                 <div class="btn-group">
@@ -28,6 +28,7 @@
                     </ul>
                 </div>
                 <button class="btn btn-default" id="butVolver" type="button" onClick="javascript:volver({{$entrega_id}})">Volver</button>
+                <button class="btn btn-sm btn-danger" onClick="javascript:eliminar({{ $entrega->entrega_id}});">Eliminar</button>
             </div>
 
         </div>
@@ -148,6 +149,21 @@
     function verItems(id) {
         var url = "{{ url('/admin/entrega_items/') }}" + "/" + id;
         window.location.href = url;
+    }
+
+    function eliminar(entrega_id) {
+        var rdo = confirm("¿Eliminar esta entrega y todo su contenido?");
+        if (rdo) {
+            $.ajax({
+                url: "{{ url('/admin/entrega/') }}" + "/" + entrega_id,
+                type: 'DELETE',
+                data: { "_token": "{{ csrf_token() }}" }, 
+                success: function(result) {
+                    var url = "{{ url('/admin/entregas/') }}";
+                    window.location.href = url;
+                }
+            });
+        }
     }
 
     </script>

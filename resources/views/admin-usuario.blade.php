@@ -37,6 +37,17 @@
   </div>
 
   <div class="form-group row" id="field_group_1">
+    <label for="input1" class="col-sm-4 col-form-label">Contraseña:</label>
+    <div class="col-sm-8">
+      @if($isAdmin == false)
+        **********
+      @else
+        <input type="password" name="clave" class="form-control" value="{{ $usuario->password }}" />
+      @endif
+    </div>
+  </div>
+
+  <div class="form-group row" id="field_group_1">
     <label for="input1" class="col-sm-4 col-form-label">Rol:</label>
     <div class="col-sm-8">
       <select id="cmbRole" name="role" class="form-control " data-toggle="tooltip" title="" 

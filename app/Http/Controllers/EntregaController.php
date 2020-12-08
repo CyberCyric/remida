@@ -23,8 +23,16 @@ class EntregaController extends Controller
     public function store(Request $request){
         
         $data = request();
+
+        $r = DB::table('entrega')
+            ->orderBy('orden','DESC')
+            ->first();
+        
+        $proxOrden = $r->orden +1; // Obtengo el numero de la ultima entrega y le seteo el siguiente
+
         $entrega = Entrega::create([
-            'fecha' =>  $data['agno']."-".$data['mes']."-".$data['dia']
+            'fecha' =>  $data['agno']."-".$data['mes']."-".$data['dia'],
+            'orden' =>  $proxOrden
         ]);
 
         return redirect()->route('entregas', ['agno' => $data['agno']]);
@@ -53,14 +61,14 @@ class EntregaController extends Controller
 
             DB::table('entrega_item')
                 ->where('entrega_id', '=', $entrega_id)
-                ->where('item_id', '=', $item_id)
+                ->where('item_id', '=', $item->item_id)
                 ->delete();
         }
 
         $entrega = Entrega::find($entrega_id);
         $entrega->delete();
 
-        return redirect()->route('entregas');
+        // return redirect()->to(url('/admin/entregas'));;
 
     }
 

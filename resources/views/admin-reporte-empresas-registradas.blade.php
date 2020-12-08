@@ -108,13 +108,13 @@
                     success: function(data) {
                         var obj = jQuery.parseJSON(data);
 
-                        $("#tableResultados").html('<tr><th class="text-left">Empresa</th><th class="text-left">Fecha de Ingreso</th><th class="text-left">Material que entrega</th></tr>');
+                        $("#tableResultados").html('<tr><th class="text-left">Empresa</th><th class="text-left">Fecha de Ingreso</th><th class="text-left">Tipo</th><th class="text-left">Material que entrega</th></tr>');
 
                         var total = new Array();
 
                         for (index = 0; index < obj.length; ++index) {
 
-                            var row = '<tr><td>'+obj[index]["razon_social"]+'</td><td>'+obj[index]["fecha_ingreso"]+'</td><td>'+obj[index]["entrega"]+'</td></tr>';                         
+                            var row = '<tr><td>'+obj[index]["razon_social"]+'</td><td>'+obj[index]["fecha_ingreso"]+'</td><td>'+obj[index]["tipo"]+'</td><td>'+obj[index]["entrega"]+'</td></tr>';                         
                                 $("#tableResultados").append(row);                           
 
                                 // total[obj[index]["item_id"]] = 0;                        

@@ -10,6 +10,7 @@ class Retiro extends Model
     protected $fillable = [
     	'fecha',
     	'nombre',
+        'email',
     	'institucion',
     	'distrito_id',
     	'proyecto_institucional',

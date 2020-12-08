@@ -24,6 +24,21 @@
 </head>
 
 <body>
+    <!-- Modal -->
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="divModalDescarga">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Archivo generado</h4>
+          </div>
+          <div class="modal-body text-center">
+            <div id="divLinkDescargaReporte"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+
     <div class="container">
         @include('admin-navbar')
         <div class="row">
@@ -75,6 +90,8 @@
         <div class="row well" style="display:none" id="divTableResultados">
             <canvas id="myChart" ></canvas>
             <hr />
+           <div class="text-right"><button class="btn" onclick="javascript:exportCSV();">Exportar</button></div>
+
             <table class="table table-stripped" id="tableResultados" ></table>
         </div>
 
@@ -130,7 +147,6 @@
             });
        
         }
-        
 
         $(document).ready(function() {
              
@@ -148,6 +164,23 @@
             $("#hasta_agno").val(hasta_agno);
 
         });
+
+        function exportCSV() {
+            var csv = '';
+
+            $("#tableResultados tr").each(function () {
+              $(this).find('td').each(function(){
+                csv += $(this).text() + ";"; 
+              });
+              csv += "\n";
+            });
+
+            var link = '<h4><a class="badge badge-secondary" href="data:application/csv;charset=utf-8,'+encodeURIComponent(csv)+'" download="reporteEntregas.csv">Descargar</a></h4>';
+
+            $("#divLinkDescargaReporte").html(link);
+            $("#divModalDescarga").modal('show');
+
+        }
 
         $("#butShowResults").click(function() {
             if (($("#desde_mes").val() == '') || ($("#desde_agno").val() == '') || ($("#hasta_mes").val() == '') || ($("#hasta_agno").val() == '')) {
@@ -167,15 +200,17 @@
                     },
                     success: function(data) {
                         var obj = jQuery.parseJSON(data);
+                        var desde = $("#desde_mes").val()+"/"+$("#desde_agno").val();
+                        var hasta = $("#hasta_mes").val()+"/"+$("#hasta_agno").val();
 
-                        $("#tableResultados").html('<tr><th class="text-left">Entrega #</th><th class="text-left">Empresa</th><th class="text-left">Fecha</th><th class="text-center">Madera</th><th class="text-center">Papel</th><th class="text-center">Plástico</th><th class="text-center">Metal</th><th class="text-center">Textil</th><th class="text-center">Vidrio</th><th class="text-center">Natural</th><th class="text-center">Otros</th></tr>');
+                        $("#tableResultados").html('<tr><td colspan="12"><h3 class="text-center">Entregas entre '+desde+' y '+hasta+'</h3></td></tr><tr><strong><td class="text-left">Entrega #</strong></td><td class="text-left"><strong>Empresa</strong></td><td class="text-left"><strong>Tipo</strong></td><td class="text-left"><strong>Fecha</strong></td><td class="text-center"><strong>Madera</strong></td><td class="text-center"><strong>Papel</strong></td><td class="text-center"><strong>Pl&aacute;stico</strong></td><td class="text-center"><strong>Metal</strong></td><td class="text-center"><strong>Textil</strong></td><td class="text-center"><strong>Vidrio</strong></td><td class="text-center"><strong>Natural</strong></td><td class="text-center"><strong>Otros</strong></td></tr>');
 
                         var total = new Array();
 
                         for (index = 0; index < obj.length; ++index) {
 
                             // Creo los Row con valor inicial 0
-                            var row = '<tr><td>'+obj[index]["entrega_id"]+'</td><td>'+obj[index]["razon_social"]+'</td><td>'+obj[index]["fecha"]+'</td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_MAD" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_PYC" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_PLA" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_MET" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_TEX" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_VID" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_NAT" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_OTR" class=" spanValue ">0</span></td></tr>';                         
+                            var row = '<tr><td>'+obj[index]["orden"]+'</td><td>'+obj[index]["razon_social"]+'</td><td>'+obj[index]["tipo"]+'</td><td>'+obj[index]["fecha"]+'</td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_MAD" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_PYC" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_PLA" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_MET" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_TEX" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_VID" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_NAT" class=" spanValue ">0</span></td><td class="text-center"><span id="sp_'+obj[index]["item_id"]+'_OTR" class=" spanValue ">0</span></td></tr>';                         
                                 $("#tableResultados").append(row);                           
 
                         }
@@ -202,7 +237,7 @@
                             if( obj[index]["codigo"] == "OTR") { total["OTR"] += obj[index]["cantidad"] }
 
                             // Cargo la información
-                            var cantidad_formateada = new Intl.NumberFormat("es-ES").format(obj[index]["cantidad"]);
+                            var cantidad_formateada = new Intl.NumberFormat("de-DE").format(obj[index]["cantidad"]);
                             $("#sp_"+obj[index]["item_id"]+'_'+obj[index]["codigo"]).html(cantidad_formateada);
                             /*
                                 if (obj[index]["cantidad"]>0){
@@ -216,7 +251,7 @@
                         }
 
                         // Totales
-                        row = '<tr><th class="text-left"></th><th class="text-left"></th><th class="text-left"></th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["MAD"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["PYC"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["PLA"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["MET"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["TEX"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["VID"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["NAT"])+'</th><th class="text-center">'+new Intl.NumberFormat("es-ES").format(total["OTR"])+'</th></tr>';
+                        row = '<tr><th class="text-left"></th><th class="text-left"></th><th class="text-left"></th><th class="text-left"></th><th class="text-center">'+new Intl.NumberFormat("de-DE").format(total["MAD"])+'</th><th class="text-center">'+new Intl.NumberFormat("de-DE").format(total["PYC"])+'</th><th class="text-center">'+new Intl.NumberFormat("de-DE").format(total["PLA"])+'</th><th class="text-center">'+new Intl.NumberFormat("de-DE").format(total["MET"])+'</th><th class="text-center">'+new Intl.NumberFormat("de-DE").format(total["TEX"])+'</th><th class="text-center">'+new Intl.NumberFormat("de-DE").format(total["VID"])+'</th><th class="text-center">'+new Intl.NumberFormat("de-DE").format(total["NAT"])+'</th><th class="text-center">'+new Intl.NumberFormat("de-DE").format(total["OTR"])+'</th></tr>';
                         
                         $("#tableResultados").append(row); 
 

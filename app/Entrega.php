@@ -9,7 +9,8 @@ class Entrega extends Model
   	protected $table = 'entrega';
     protected  $primaryKey = 'entrega_id';
     protected $fillable = [
-    	'fecha',
+        'fecha',
+        'orden',
     	'empresa_id',
     	'madera',
         'papel',

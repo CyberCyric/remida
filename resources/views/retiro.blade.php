@@ -28,7 +28,7 @@
                   <label for="" class="col-sm-2 col-form-label">Lugar de retiro:</label>
                   <div class="col-sm-10">
                      
-                     <form class="form-inline">
+                     <form class="form">
                           <div class="form-check mb-2 mr-sm-2">
                            <label class="form-check-label" for="inlineFormCheck">
                               Centro ReMida
@@ -61,6 +61,12 @@
                   </div>
                </div>
                <div class="form-group row">
+                  <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                  <div class="col-sm-10">
+                     <input type="text" id="input_email" name="email" data-type="input-textbox" class="form-control " size="70" value="" placeholder=" " data-component="textbox" required="">
+                  </div>
+               </div>
+               <div class="form-group row">
                   <label for="evento" class="col-sm-2 col-form-label">Evento:</label>
                   <div class="col-sm-10">
                      <input type="text" id="input_evento" name="evento" data-type="input-textbox" class="form-control " size="70" value="" placeholder=" " data-component="textbox" required="">
@@ -90,10 +96,16 @@
                </div>
                <div class="form-group row">
                   <label for="fecha" class="col-sm-2 col-form-label">Fecha (dd/mm/aaaa):</label>
-                  <div class="col-sm-10">
-                     <input type="text" name="dia" size="2" id="inputDia" value="{{ date('d') }}" />
-            <input type="text" name="mes" size="2" id="inputMes" value="{{ date('m') }}" />
-            <input type="text" name="agno" size="4" id="inputAgno" value="{{ date('Y') }}" />
+                  <div class="form-inline">
+                    <div class="col-xs-4 col-md-2">
+                     <input type="number" name="dia" size="2" id="inputDia" value="{{ date('d') }}" class="form-control"/>
+                   </div>
+                   <div class="col-xs-4 col-md-2">
+            <input type="number" name="mes" size="2" id="inputMes" value="{{ date('m') }}" class="form-control"/>
+                  </div>
+                  <div class="col-xs-4 col-md-2">
+            <input type="number" name="agno" size="4" id="inputAgno" value="{{ date('Y') }}" class="form-control"/>
+                  </div>
                   </div>
                </div>
                <hr/>
@@ -234,6 +246,11 @@
             error = true;
             msg += " - Seleccioná el lugar de retiro. \n";
           } 
+
+          if ( $("#input_email").val() == '') {
+              $("#input_email").val('-');
+          }
+
           if (error){
             alert("Se encontraron los siguientes errores: \n"+ msg);
           } else {

@@ -10,10 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Auth::routes();
 Route::get('/registration_complete', function () {
@@ -21,10 +17,11 @@ Route::get('/registration_complete', function () {
 });
 
 /* RETIROS */
+Route::get('/', 'RetiroController@displayForm');
 Route::get('/retiro', 'RetiroController@displayForm');
 Route::post('/retiro', 'RetiroController@store');
-Route::get('/admin/retiros_pendientes', 'RetiroController@listPendientes')->middleware('auth')->name('retiros');
-Route::get('/admin/retiros_aprobados', 'RetiroController@listAprobados')->middleware('auth')->name('retiros');
+Route::get('/admin/retiros_pendientes/{exportToCSV?}', 'RetiroController@listPendientes')->middleware('auth')->name('retiros-pendientes');
+Route::get('/admin/retiros_aprobados/{exportToCSV?}', 'RetiroController@listAprobados')->middleware('auth')->name('retiros-aprobados');
 Route::get('/admin/retiro/{retiro_id}', 'RetiroController@show')->middleware('auth');
 Route::post('/admin/retiro/{retiro_id}/approve', 'RetiroController@approve')->middleware('auth');
 Route::delete('/admin/retiro/{retiro_id}/reject', 'RetiroController@reject')->middleware('auth')->name('retiros.destroy');
@@ -58,7 +55,7 @@ Route::delete('/admin/usuario/{id}', 'UsuarioController@delete')->middleware('au
 Route::get('/admin/logout', 'Auth\LoginController@logout')->middleware('auth');
 
 /************* REPORTES ****************/
-Route::get('/admin/', 'ReporteController@reporteStock')->name('stock');
+Route::get('/admin/', 'ReporteController@reporteStock')->name('stock')->middleware('auth');
 Route::get('/admin/home', 'ReporteController@reporteStock')->middleware('auth')->name('stock');
 Route::get('/admin/reportes/stock', 'ReporteController@reporteStock')->middleware('auth')->name('stock');
 

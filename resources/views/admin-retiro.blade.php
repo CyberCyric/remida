@@ -29,6 +29,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="nombre" class="col-sm-2 col-form-label">Email:</label>
+                    <div class="col-sm-10">
+                        {{ $retiro->email }}
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="institucion" class="col-sm-2 col-form-label">Escuela / Institución:</label>
                     <div class="col-sm-10">
                         {{ $retiro->institucion }}
@@ -56,6 +62,12 @@
                     <label for="fecha" class="col-sm-2 col-form-label">Fecha (dd/mm/aaaa):</label>
                     <div class="col-sm-10">
                         {{ \Carbon\Carbon::parse($retiro->fecha)->format('d/m/Y')}}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="lugar_retiro" class="col-sm-2 col-form-label">Lugar de Retiro:</label>
+                    <div class="col-sm-10">
+                        {{ $retiro->lugar_retiro }}
                     </div>
                 </div>
                 <hr />

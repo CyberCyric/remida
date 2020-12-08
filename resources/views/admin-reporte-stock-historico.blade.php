@@ -114,7 +114,7 @@
             options: {
                 title: {
                     display: true,
-                    text: "Stock histórico de Material (en Gramos)",
+                    text: "Stock histórico de Material (en Kilogramos)",
                     fontSize: 20,
                   },
                 scales: {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use App\Retiro;
 
 class RetiroController extends Controller
@@ -28,40 +29,126 @@ class RetiroController extends Controller
         //
     }
 
-    public function listPendientes(){
-        $retiros = DB::table('retiros')
-        ->leftJoin('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
-        ->where('aprobado','N')
-        ->orderBy('fecha', 'desc')
-        ->orderBy('retiro_id', 'desc')
-        ->selectRaw('distrito.nombre AS distrito, retiros.*')
-        ->paginate(100);        
-        return view('admin-retiros', compact('id', 'retiros'));
+    public function listPendientes($exportToJson = null){
+        $aprobado = 'N';
+        if ($exportToJson){
+            $retiros = DB::table('retiros')
+            ->leftJoin('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
+            ->where('aprobado','N')
+            ->orderBy('fecha', 'desc')
+            ->orderBy('orden', 'desc')
+            ->selectRaw('distrito.nombre AS distrito, retiros.*')
+            ->get();    
+
+            $filename = 'reportes/reporteRetirosPendientes.csv';
+            $filepath = url($filename);
+            $fp = fopen($filename, 'w');
+            $headers = array("Nº",
+                "Fecha",
+                "Escuela / Institución",
+                "Distrito",
+                "Nombre y Apellido",
+                "Evento",
+                "Proyecto Instit.",
+                "Estado");
+            // $headers = array_map("utf8_decode", $headers);
+            fputcsv($fp, $headers,";");
+
+            foreach ($retiros as $registro) {
+                $row = array($registro->orden,
+                    Carbon::parse($registro->fecha)->format('d/m/Y'),
+                    $registro->institucion,
+                    $registro->distrito,
+                    $registro->nombre,
+                    $registro->evento,
+                    $registro->proyecto_institucional,
+                    'PENDIENTE');
+                fputcsv($fp, $row, ";");
+            }
+
+            fclose($fp);
+            return $filepath;
+
+        } else {
+            $retiros = DB::table('retiros')
+            ->leftJoin('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
+            ->where('aprobado','N')
+            ->orderBy('fecha', 'desc')
+            ->orderBy('orden', 'desc')
+            ->selectRaw('distrito.nombre AS distrito, retiros.*')
+            ->paginate(100);        
+            return view('admin-retiros', compact('id', 'retiros', 'aprobado'));
+        }
     }
 
-    public function listAprobados(){
-        $retiros = DB::table('retiros')
-        ->leftJoin('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
-        ->where('aprobado','S')
-        ->orderBy('fecha', 'desc')
-        ->orderBy('retiro_id', 'desc')
-        ->selectRaw('distrito.nombre AS distrito, retiros.*')
-        ->paginate(100);        
-        return view('admin-retiros', compact('id', 'retiros'));
+    public function listAprobados($exportToJson  = null){
+        $aprobado = 'S';
+        if ($exportToJson){
+            $retiros = DB::table('retiros')
+            ->leftJoin('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
+            ->where('aprobado','S')
+            ->orderBy('fecha', 'desc')
+            ->orderBy('orden', 'desc')
+            ->selectRaw('distrito.nombre AS distrito, retiros.*')
+            ->get();    
+
+            $filename = 'reportes/reporteRetirosAprobados.csv';
+            $filepath = url($filename);
+            $fp = fopen($filename, 'w');
+            $headers = array("Nº",
+                "Fecha",
+                "Escuela / Institución",
+                "Distrito",
+                "Nombre y Apellido",
+                "Evento",
+                "Proyecto Instit.",
+                "Estado");
+           // $headers = array_map("utf8_decode", $headers);
+            fputcsv($fp, $headers, ";");
+
+            foreach ($retiros as $registro) {
+                $row = array($registro->orden,
+                    Carbon::parse($registro->fecha)->format('d/m/Y'),
+                    $registro->institucion,
+                    $registro->distrito,
+                    $registro->nombre,
+                    $registro->evento,
+                    $registro->proyecto_institucional,
+                    'APROBADO');
+                fputcsv($fp, $row,";");
+            }
+
+            fclose($fp);
+            return $filepath;
+
+        } else {
+            $retiros = DB::table('retiros')
+            ->leftJoin('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
+            ->where('aprobado','S')
+            ->orderBy('fecha', 'desc')
+            ->orderBy('orden', 'desc')
+            ->selectRaw('distrito.nombre AS distrito, retiros.*')
+            ->paginate(100);        
+            return view('admin-retiros', compact('id', 'retiros', 'aprobado'));
+        }
     }
 
     public function reject($id){
         $retiros = Retiro::find($id);
         $retiros->delete();
+        $aprobado = 'N';
 
+        /*
         $retiros = DB::table('retiros')
         ->join('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
         ->where('aprobado','N')
         ->orderBy('fecha', 'desc')
         ->orderBy('retiro_id', 'desc')
         ->selectRaw('distrito.nombre AS distrito, retiros.*')
-        ->paginate(100);        
-        return view('admin-retiros', compact('id', 'retiros'));
+        ->paginate(100);    
+        */
+        return redirect()->route('retiros-pendientes')->with('aprobado', $aprobado);
+        // return view('admin-retiros', compact('id', 'retiros','aprobado'));
     }
 
     public function approve($id){
@@ -112,7 +199,7 @@ class RetiroController extends Controller
         $retiro->aprobado_por = session('user')->id;
         $retiro->aprobado_fecha = date('Y-m-d');
         $retiro->save();
-        return redirect()->route('retiros');
+        return redirect()->route('retiros-aprobados');
     }
 
     /**
@@ -129,6 +216,7 @@ class RetiroController extends Controller
         $retiro = Retiro::create([
             'fecha' => $data["agno"]."-".$data["mes"]."-".$data["dia"],
             'nombre' => $data['nombre'],
+            'email' => $data['email'],
             'institucion' => $data['institucion'],
             'distrito_id' => $data['distrito_id'],
             'evento' => $data['evento'],
@@ -155,6 +243,9 @@ class RetiroController extends Controller
 
         //dd(DB::getQueryLog());
         $retiro_id = $retiro->retiro_id;
+        $retiro = Retiro::find($retiro_id);
+        $retiro->orden = $retiro_id;
+        $retiro->save();
         return view('retiro_post', compact('retiro_id'));
     }
 
@@ -172,7 +263,8 @@ class RetiroController extends Controller
         ->join('distrito', 'retiros.distrito_id', '=', 'distrito.distrito_id')
         ->leftJoin('users', 'retiros.aprobado_por', '=', 'users.id')
         ->where('retiros.retiro_id','=',$retiro_id)
-        ->selectRaw('retiros.retiro_id, retiros.aprobado, retiros.fecha, DATE_FORMAT(retiros.aprobado_fecha, "%d/%m/%Y") AS aprobado_fecha, retiros.nombre, retiros.institucion, retiros.distrito_id, retiros.proyecto_institucional, retiros.aprobado_por, retiros.madera, retiros.madera_obs, retiros.papel, retiros.papel_obs,  retiros.plastico, retiros.plastico_obs, retiros.metal, retiros.metal_obs, retiros.textil, retiros.textil_obs, retiros.vidrio, retiros.vidrio_obs, retiros.natural, retiros.natural_obs, retiros.otros, retiros.otros_obs, retiros.evento, retiros.lugar_retiro, distrito.nombre AS nombreDistrito, users.name AS aprobador')
+        ->selectRaw('retiros.retiro_id, retiros.orden, retiros.aprobado, retiros.fecha, DATE_FORMAT(retiros.aprobado_fecha, "%d/%m/%Y") AS aprobado_fecha, retiros.nombre, 
+            retiros.email, retiros.institucion, retiros.distrito_id, retiros.proyecto_institucional, retiros.aprobado_por, retiros.madera, retiros.madera_obs, retiros.papel, retiros.papel_obs,  retiros.plastico, retiros.plastico_obs, retiros.metal, retiros.metal_obs, retiros.textil, retiros.textil_obs, retiros.vidrio, retiros.vidrio_obs, retiros.natural, retiros.natural_obs, retiros.otros, retiros.otros_obs, retiros.evento, retiros.lugar_retiro, distrito.nombre AS nombreDistrito, users.name AS aprobador')
         ->first();   
 
         // dd(DB::getQueryLog());
@@ -188,7 +280,7 @@ class RetiroController extends Controller
 
     public function displayForm(){
         $distritos = DB::table('distrito')
-        ->orderBy('nombre')
+        ->orderBy('distrito_id')
         ->get();        
         return view('retiro', compact('distritos'));
     }
