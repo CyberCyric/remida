@@ -224,7 +224,7 @@
                         <button class="btn btn-lg btn-danger" type="button" id="butEliminarRetiro">Eliminar</button>
                     
                     @else
-                        <div class="alert alert-warning text-center">Retiro aprobado por <strong>{{ $retiro->aprobador }}</strong> en <strong>{{ $retiro->aprobado_fecha }}</strong>.</div>
+                        <div class="alert alert-warning text-center">Retiro aprobado por <strong>{{ $retiro->aprobadorEmail }}</strong> en <strong>{{ $retiro->aprobado_fecha }}</strong>.</div>
                     @endif
                     </div>
                     <div class="clearfix" data-original-title=""> </div>

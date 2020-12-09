@@ -297,19 +297,20 @@
                         borderWidth: 1
                     },
                     {
-                        label: 'Viajero',
-                       data: [ viajeros["MAD"], viajeros["PYC"], viajeros["PLA"], viajeros["MET"], viajeros["TEX"], viajeros["VID"], viajeros["NAT"], viajeros["OTR"]  ],
-                        backgroundColor: 'rgba(188,246,12, 0.4)',
-                        borderColor: ['rgba(188,246,12, 0.4)'],
-                        borderWidth: 1
-                    },
-                    {
                         label: 'Eventos',
                         data: [ eventos["MAD"], eventos["PYC"], eventos["PLA"], eventos["MET"], eventos["TEX"], eventos["VID"], eventos["NAT"], eventos["OTR"]  ],
                         backgroundColor: 'rgba(99, 255, 132, 0.2)',
                         borderColor: ['rgba(99, 255, 132, 1)'],
                         borderWidth: 1
-                    }]
+                    },
+                    {
+                      label: 'Viajero',
+                       data: [ viajeros["MAD"], viajeros["PYC"], viajeros["PLA"], viajeros["MET"], viajeros["TEX"], viajeros["VID"], viajeros["NAT"], viajeros["OTR"]  ],
+                        backgroundColor: 'rgba(188,246,12, 0.4)',
+                        borderColor: ['rgba(188,246,12, 0.4)'],
+                        borderWidth: 1
+                    }
+                    ]
                 },
                 options: {
                     scales: {
@@ -318,6 +319,10 @@
                                 beginAtZero: true
                             }
                         }]
+                    },
+                    zoom: {
+                        enabled: false,                     
+                        mode: 'y',
                     }
                 }
             });

@@ -264,7 +264,7 @@ class RetiroController extends Controller
         ->leftJoin('users', 'retiros.aprobado_por', '=', 'users.id')
         ->where('retiros.retiro_id','=',$retiro_id)
         ->selectRaw('retiros.retiro_id, retiros.orden, retiros.aprobado, retiros.fecha, DATE_FORMAT(retiros.aprobado_fecha, "%d/%m/%Y") AS aprobado_fecha, retiros.nombre, 
-            retiros.email, retiros.institucion, retiros.distrito_id, retiros.proyecto_institucional, retiros.aprobado_por, retiros.madera, retiros.madera_obs, retiros.papel, retiros.papel_obs,  retiros.plastico, retiros.plastico_obs, retiros.metal, retiros.metal_obs, retiros.textil, retiros.textil_obs, retiros.vidrio, retiros.vidrio_obs, retiros.natural, retiros.natural_obs, retiros.otros, retiros.otros_obs, retiros.evento, retiros.lugar_retiro, distrito.nombre AS nombreDistrito, users.name AS aprobador')
+            retiros.email, retiros.institucion, retiros.distrito_id, retiros.proyecto_institucional, retiros.aprobado_por, retiros.madera, retiros.madera_obs, retiros.papel, retiros.papel_obs,  retiros.plastico, retiros.plastico_obs, retiros.metal, retiros.metal_obs, retiros.textil, retiros.textil_obs, retiros.vidrio, retiros.vidrio_obs, retiros.natural, retiros.natural_obs, retiros.otros, retiros.otros_obs, retiros.evento, retiros.lugar_retiro, distrito.nombre AS nombreDistrito, users.name AS aprobador, users.email AS aprobadorEmail')
         ->first();   
 
         // dd(DB::getQueryLog());

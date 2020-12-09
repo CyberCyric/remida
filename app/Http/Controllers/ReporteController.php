@@ -14,19 +14,24 @@ class ReporteController extends Controller
         
         $cantidadRetiros = DB::table('retiros')
     		->where('retiros.aprobado','S')
-    		->count();
+            ->count();
+            
+        $sumaRetiros = DB::table('retiros')
+        ->where('retiros.aprobado','S')
+        ->selectRaw('SUM(madera) AS MAD, SUM(plastico) AS PLA, SUM(metal) AS MET, SUM(`natural`) AS NAT, SUM(papel) AS PYC, SUM(vidrio) AS VID, SUM(textil) AS TEX, SUM(otros) AS OTR')
+        ->get();
         
         $cantidadEmpresas = DB::table('empresa')->count();  
         $materiales = DB::table('stock')->selectRaw('nombre, stock / 1000 AS stock')->get();
         
         $entregas = DB::table('entrega_item')
         ->join('stock', 'stock.material_id', '=', 'entrega_item.material_id')
-        ->selectRaw('SUM(entrega_item.cantidad), stock.codigo')
+        ->selectRaw('SUM(entrega_item.cantidad) AS total, stock.codigo')
         ->groupBy('stock.codigo')
         ->get();
-        
-        return view('admin-reporte-stock', compact('cantidadEntregas', 'cantidadRetiros', 'cantidadEmpresas', 'materiales'));
-	}
+
+        return view('admin-reporte-stock', compact('cantidadEntregas', 'cantidadRetiros', 'cantidadEmpresas', 'materiales', 'sumaRetiros', 'entregas'));
+    }
 
     public function reporteEmpresasRegistradas($desde = '', $hasta = ''){
         return view('admin-reporte-empresas-registradas');

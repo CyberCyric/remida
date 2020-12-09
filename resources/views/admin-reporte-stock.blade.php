@@ -130,8 +130,84 @@
     $( document ).ready(function() {
         $("#navbar li").removeClass('menulink-active');
         $("#navbar li#menulink-admin-reportes").addClass('menulink-active');
+
+        /* Calculo la diferencia entre Entregas y Retiros por Material */
+        var madera = parseInt($("#tdEntregasMAD").html()) - parseInt($("#tdRetirosMAD").html());
+        $("#tdDiffMAD").html(madera);
+        var pyc = parseInt($("#tdEntregasPYC").html()) - parseInt($("#tdRetirosPYC").html());
+        $("#tdDiffPYC").html(pyc);
+        var plastico = parseInt($("#tdEntregasPLA").html()) - parseInt($("#tdRetirosPLA").html());
+        $("#tdDiffPLA").html(plastico);
+        var metal = parseInt($("#tdEntregasMET").html()) - parseInt($("#tdRetirosMET").html());
+        $("#tdDiffMET").html(metal);
+        var textil = parseInt($("#tdEntregasTEX").html()) - parseInt($("#tdRetirosTEX").html());
+        $("#tdDiffTEX").html(textil);
+        var vidrio = parseInt($("#tdEntregasVID").html()) - parseInt($("#tdRetirosVID").html());
+        $("#tdDiffVID").html(vidrio);
+        var natural = parseInt($("#tdEntregasNAT").html()) - parseInt($("#tdRetirosNAT").html());
+        $("#tdDiffNAT").html(natural);
+        var otros = parseInt($("#tdEntregasOTR").html()) - parseInt($("#tdRetirosOTR").html());
+        $("#tdDiffOTR").html(otros);
      });
         </script>
+  </div>
+  <div>
+  <table class="table">
+  <tr>
+    <th>Material</th>
+    <th>Entregas</th>
+    <th>Retiros</th>
+    <th>Diferencia (ENT - RET)</th>
+  </tr>
+  <tr>
+     <td>Madera</td>
+     <td id="tdEntregasMAD">{{ $entregas[0]->total }}</td>
+     <td id="tdRetirosMAD">{{ $sumaRetiros[0]->MAD }}</td>
+     <td id="tdDiffMAD"></td>
+  </tr>
+  <tr>
+     <td>Papel y Cartón</td>
+     <td id="tdEntregasPYC">{{ $entregas[5]->total }}</td>
+     <td id="tdRetirosPYC">{{ $sumaRetiros[0]->PYC }}</td>
+     <td id="tdDiffPYC"></td>
+  </tr>
+  <tr>
+     <td>Plástico</td>
+     <td id="tdEntregasPLA">{{ $entregas[4]->total }}</td>
+     <td id="tdRetirosPLA">{{ $sumaRetiros[0]->PLA }}</td>
+     <td id="tdDiffPLA"></td>
+  </tr>
+  <tr>
+     <td>Metal</td>
+     <td id="tdEntregasMET">{{ $entregas[1]->total }}</td>
+     <td id="tdRetirosMET">{{ $sumaRetiros[0]->MET }}</td>
+     <td id="tdDiffMET"></td>
+  </tr>
+  <tr>
+     <td>Textil</td>
+     <td id="tdEntregasTEX">{{ $entregas[6]->total }}</td>
+     <td id="tdRetirosTEX">{{ $sumaRetiros[0]->TEX }}</td>
+     <td id="tdDiffTEX"></td>
+  </tr>
+  <tr>
+     <td>Vidrio</td>
+     <td id="tdEntregasVID">{{ $entregas[7]->total }}</td>
+     <td id="tdRetirosVID">{{ $sumaRetiros[0]->VID }}</td>
+     <td id="tdDiffVID"></td>
+  </tr>
+  <tr>
+     <td>Natural</td>
+     <td id="tdEntregasNAT">{{ $entregas[2]->total }}</td>
+     <td id="tdRetirosNAT">{{ $sumaRetiros[0]->NAT }}</td>
+     <td id="tdDiffNAT"></td>
+  </tr>
+  <tr>
+     <td>Otros</td>
+     <td id="tdEntregasOTR">{{ $entregas[3]->total }}</td>
+     <td id="tdRetirosOTR">{{ $sumaRetiros[0]->OTR }}</td>
+     <td id="tdDiffOTR"></td>
+  </tr>
+  </table>
   </div>
 
 </div>
